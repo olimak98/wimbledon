@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableJuez" header="JuezData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{juezView.data}" var="juez"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{juez.juezId}" sortBy="#{juez.juezId}" >
+										 <f:facet name="header">
+										<h:outputText value="juezId"/>
+										</f:facet>
+										 <h:outputText value="#{juez.juezId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{juez.estado}" sortBy="#{juez.estado}" >
+										 <f:facet name="header">
+										<h:outputText value="Estado"/>
+										</f:facet>
+										 <h:outputText value="#{juez.estado}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{juez.personaId_Persona}" sortBy="#{juez.personaId_Persona}" >
+										 <f:facet name="header">
+										<h:outputText value="PersonaId_Persona"/>
+										</f:facet>
+										 <h:outputText value="#{juez.personaId_Persona}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogJuez"
+										actionListener="#{juezView.action_edit}">
+										<f:attribute name="selectedJuez" value="#{juez}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{juezView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedJuez" value="#{juez}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{juezView.action_new()}" update=":dialogJuez" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogJuez" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{juezView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelJuez" header="Juez">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgJuezId" value="JuezId"/>
+									 <p:inputText id="txtJuezId" binding="#{juezView.txtJuezId}">
+									 <p:ajax update=":dialogJuez" listener="#{juezView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgEstado" value=" Estado"/>
+									<p:inputText id="txtEstado" disabled="true" binding="#{juezView.txtEstado}"/>
+																		<h:outputText id="msgPersonaId_Persona" value=" PersonaId_Persona"/>
+									<p:inputText id="txtPersonaId_Persona" disabled="true" binding="#{juezView.txtPersonaId_Persona}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{juezView.btnSave}" value="Save" action="#{juezView.action_save()}" update=":dialogJuez :frm:panelDataTableJuez" />
+									<p:commandButton id="btnClear" value="Clear" action="#{juezView.action_clear()}" update=":dialogJuez" />
+									<p:commandButton id="btnExit" value="Exit" action="#{juezView.action_closeDialog()}" update=":dialogJuez" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

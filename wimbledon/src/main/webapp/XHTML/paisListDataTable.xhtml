@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTablePais" header="PaisData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{paisView.data}" var="pais"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{pais.paisId}" sortBy="#{pais.paisId}" >
+										 <f:facet name="header">
+										<h:outputText value="paisId"/>
+										</f:facet>
+										 <h:outputText value="#{pais.paisId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{pais.codigo}" sortBy="#{pais.codigo}" >
+										 <f:facet name="header">
+										<h:outputText value="Codigo"/>
+										</f:facet>
+										 <h:outputText value="#{pais.codigo}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{pais.nombre}" sortBy="#{pais.nombre}" >
+										 <f:facet name="header">
+										<h:outputText value="Nombre"/>
+										</f:facet>
+										 <h:outputText value="#{pais.nombre}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogPais"
+										actionListener="#{paisView.action_edit}">
+										<f:attribute name="selectedPais" value="#{pais}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{paisView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedPais" value="#{pais}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{paisView.action_new()}" update=":dialogPais" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogPais" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{paisView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelPais" header="Pais">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgPaisId" value="PaisId"/>
+									 <p:inputText id="txtPaisId" binding="#{paisView.txtPaisId}">
+									 <p:ajax update=":dialogPais" listener="#{paisView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgCodigo" value=" Codigo"/>
+									<p:inputText id="txtCodigo" disabled="true" binding="#{paisView.txtCodigo}"/>
+																		<h:outputText id="msgNombre" value=" Nombre"/>
+									<p:inputText id="txtNombre" disabled="true" binding="#{paisView.txtNombre}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{paisView.btnSave}" value="Save" action="#{paisView.action_save()}" update=":dialogPais :frm:panelDataTablePais" />
+									<p:commandButton id="btnClear" value="Clear" action="#{paisView.action_clear()}" update=":dialogPais" />
+									<p:commandButton id="btnExit" value="Exit" action="#{paisView.action_closeDialog()}" update=":dialogPais" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

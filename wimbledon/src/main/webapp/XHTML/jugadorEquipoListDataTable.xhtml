@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableJugadorEquipo" header="JugadorEquipoData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{jugadorEquipoView.data}" var="jugadorEquipo"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{jugadorEquipo.jugadorEquipoId}" sortBy="#{jugadorEquipo.jugadorEquipoId}" >
+										 <f:facet name="header">
+										<h:outputText value="jugadorEquipoId"/>
+										</f:facet>
+										 <h:outputText value="#{jugadorEquipo.jugadorEquipoId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{jugadorEquipo.equipoId_Equipo}" sortBy="#{jugadorEquipo.equipoId_Equipo}" >
+										 <f:facet name="header">
+										<h:outputText value="EquipoId_Equipo"/>
+										</f:facet>
+										 <h:outputText value="#{jugadorEquipo.equipoId_Equipo}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{jugadorEquipo.jugadorId_Jugador}" sortBy="#{jugadorEquipo.jugadorId_Jugador}" >
+										 <f:facet name="header">
+										<h:outputText value="JugadorId_Jugador"/>
+										</f:facet>
+										 <h:outputText value="#{jugadorEquipo.jugadorId_Jugador}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogJugadorEquipo"
+										actionListener="#{jugadorEquipoView.action_edit}">
+										<f:attribute name="selectedJugadorEquipo" value="#{jugadorEquipo}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{jugadorEquipoView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedJugadorEquipo" value="#{jugadorEquipo}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{jugadorEquipoView.action_new()}" update=":dialogJugadorEquipo" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogJugadorEquipo" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{jugadorEquipoView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelJugadorEquipo" header="JugadorEquipo">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgJugadorEquipoId" value="JugadorEquipoId"/>
+									 <p:inputText id="txtJugadorEquipoId" binding="#{jugadorEquipoView.txtJugadorEquipoId}">
+									 <p:ajax update=":dialogJugadorEquipo" listener="#{jugadorEquipoView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgEquipoId_Equipo" value=" EquipoId_Equipo"/>
+									<p:inputText id="txtEquipoId_Equipo" disabled="true" binding="#{jugadorEquipoView.txtEquipoId_Equipo}"/>
+																		<h:outputText id="msgJugadorId_Jugador" value=" JugadorId_Jugador"/>
+									<p:inputText id="txtJugadorId_Jugador" disabled="true" binding="#{jugadorEquipoView.txtJugadorId_Jugador}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{jugadorEquipoView.btnSave}" value="Save" action="#{jugadorEquipoView.action_save()}" update=":dialogJugadorEquipo :frm:panelDataTableJugadorEquipo" />
+									<p:commandButton id="btnClear" value="Clear" action="#{jugadorEquipoView.action_clear()}" update=":dialogJugadorEquipo" />
+									<p:commandButton id="btnExit" value="Exit" action="#{jugadorEquipoView.action_closeDialog()}" update=":dialogJugadorEquipo" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

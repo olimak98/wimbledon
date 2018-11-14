@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelJugadorEquipo" header="JugadorEquipo">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgJugadorEquipoId" value="JugadorEquipoId"/>
+						 	<p:inputText id="txtJugadorEquipoId" binding="#{jugadorEquipoView.txtJugadorEquipoId}">
+						 		<p:ajax update="panelJugadorEquipo,msg,panelBotones" listener="#{jugadorEquipoView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgEquipoId_Equipo" value=" EquipoId_Equipo"/>
+							<p:inputText id="txtEquipoId_Equipo" disabled="true" binding="#{jugadorEquipoView.txtEquipoId_Equipo}"/>
+													<h:outputText id="msgJugadorId_Jugador" value=" JugadorId_Jugador"/>
+							<p:inputText id="txtJugadorId_Jugador" disabled="true" binding="#{jugadorEquipoView.txtJugadorId_Jugador}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{jugadorEquipoView.btnSave}" disabled="true" value="Save" action="#{jugadorEquipoView.action_save()}" update="panelJugadorEquipo,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{jugadorEquipoView.btnDelete}" disabled="true" value="Delete" action="#{jugadorEquipoView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelJugadorEquipo,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{jugadorEquipoView.action_clear()}" update="panelJugadorEquipo,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

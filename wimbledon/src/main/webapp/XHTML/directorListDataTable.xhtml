@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableDirector" header="DirectorData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{directorView.data}" var="director"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{director.directorId}" sortBy="#{director.directorId}" >
+										 <f:facet name="header">
+										<h:outputText value="directorId"/>
+										</f:facet>
+										 <h:outputText value="#{director.directorId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{director.estado}" sortBy="#{director.estado}" >
+										 <f:facet name="header">
+										<h:outputText value="Estado"/>
+										</f:facet>
+										 <h:outputText value="#{director.estado}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{director.personaId_Persona}" sortBy="#{director.personaId_Persona}" >
+										 <f:facet name="header">
+										<h:outputText value="PersonaId_Persona"/>
+										</f:facet>
+										 <h:outputText value="#{director.personaId_Persona}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogDirector"
+										actionListener="#{directorView.action_edit}">
+										<f:attribute name="selectedDirector" value="#{director}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{directorView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedDirector" value="#{director}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{directorView.action_new()}" update=":dialogDirector" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogDirector" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{directorView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelDirector" header="Director">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgDirectorId" value="DirectorId"/>
+									 <p:inputText id="txtDirectorId" binding="#{directorView.txtDirectorId}">
+									 <p:ajax update=":dialogDirector" listener="#{directorView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgEstado" value=" Estado"/>
+									<p:inputText id="txtEstado" disabled="true" binding="#{directorView.txtEstado}"/>
+																		<h:outputText id="msgPersonaId_Persona" value=" PersonaId_Persona"/>
+									<p:inputText id="txtPersonaId_Persona" disabled="true" binding="#{directorView.txtPersonaId_Persona}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{directorView.btnSave}" value="Save" action="#{directorView.action_save()}" update=":dialogDirector :frm:panelDataTableDirector" />
+									<p:commandButton id="btnClear" value="Clear" action="#{directorView.action_clear()}" update=":dialogDirector" />
+									<p:commandButton id="btnExit" value="Exit" action="#{directorView.action_closeDialog()}" update=":dialogDirector" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

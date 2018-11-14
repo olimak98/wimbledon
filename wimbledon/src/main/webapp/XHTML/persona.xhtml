@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelPersona" header="Persona">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgPersonaId" value="PersonaId"/>
+						 	<p:inputText id="txtPersonaId" binding="#{personaView.txtPersonaId}">
+						 		<p:ajax update="panelPersona,msg,panelBotones" listener="#{personaView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgIdentificacion" value=" Identificacion"/>
+							<p:inputText id="txtIdentificacion" disabled="true" binding="#{personaView.txtIdentificacion}"/>
+													<h:outputText id="msgNombreCompleto" value=" NombreCompleto"/>
+							<p:inputText id="txtNombreCompleto" disabled="true" binding="#{personaView.txtNombreCompleto}"/>
+													<h:outputText id="msgTipoIdentificacion" value=" TipoIdentificacion"/>
+							<p:inputText id="txtTipoIdentificacion" disabled="true" binding="#{personaView.txtTipoIdentificacion}"/>
+													<h:outputText id="msgPaisId_Pais" value=" PaisId_Pais"/>
+							<p:inputText id="txtPaisId_Pais" disabled="true" binding="#{personaView.txtPaisId_Pais}"/>
+												
+																				<h:outputText id="msgFechaNacimiento" value=" FechaNacimiento"/>
+														<p:calendar showOn="button" navigator="true" locale="en" 
+							binding="#{personaView.txtFechaNacimiento}" >
+								<p:ajax event="dateSelect" listener="#{personaView.listener_txtFechaNacimiento}" />
+							</p:calendar>
+																	   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{personaView.btnSave}" disabled="true" value="Save" action="#{personaView.action_save()}" update="panelPersona,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{personaView.btnDelete}" disabled="true" value="Delete" action="#{personaView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelPersona,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{personaView.action_clear()}" update="panelPersona,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

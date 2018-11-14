@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableCancha" header="CanchaData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{canchaView.data}" var="cancha"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{cancha.canchaId}" sortBy="#{cancha.canchaId}" >
+										 <f:facet name="header">
+										<h:outputText value="canchaId"/>
+										</f:facet>
+										 <h:outputText value="#{cancha.canchaId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{cancha.dimensiones}" sortBy="#{cancha.dimensiones}" >
+										 <f:facet name="header">
+										<h:outputText value="Dimensiones"/>
+										</f:facet>
+										 <h:outputText value="#{cancha.dimensiones}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{cancha.estado}" sortBy="#{cancha.estado}" >
+										 <f:facet name="header">
+										<h:outputText value="Estado"/>
+										</f:facet>
+										 <h:outputText value="#{cancha.estado}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{cancha.nombre}" sortBy="#{cancha.nombre}" >
+										 <f:facet name="header">
+										<h:outputText value="Nombre"/>
+										</f:facet>
+										 <h:outputText value="#{cancha.nombre}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{cancha.tipo}" sortBy="#{cancha.tipo}" >
+										 <f:facet name="header">
+										<h:outputText value="Tipo"/>
+										</f:facet>
+										 <h:outputText value="#{cancha.tipo}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{cancha.ubicacion}" sortBy="#{cancha.ubicacion}" >
+										 <f:facet name="header">
+										<h:outputText value="Ubicacion"/>
+										</f:facet>
+										 <h:outputText value="#{cancha.ubicacion}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogCancha"
+										actionListener="#{canchaView.action_edit}">
+										<f:attribute name="selectedCancha" value="#{cancha}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{canchaView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedCancha" value="#{cancha}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{canchaView.action_new()}" update=":dialogCancha" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogCancha" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{canchaView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelCancha" header="Cancha">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgCanchaId" value="CanchaId"/>
+									 <p:inputText id="txtCanchaId" binding="#{canchaView.txtCanchaId}">
+									 <p:ajax update=":dialogCancha" listener="#{canchaView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgDimensiones" value=" Dimensiones"/>
+									<p:inputText id="txtDimensiones" disabled="true" binding="#{canchaView.txtDimensiones}"/>
+																		<h:outputText id="msgEstado" value=" Estado"/>
+									<p:inputText id="txtEstado" disabled="true" binding="#{canchaView.txtEstado}"/>
+																		<h:outputText id="msgNombre" value=" Nombre"/>
+									<p:inputText id="txtNombre" disabled="true" binding="#{canchaView.txtNombre}"/>
+																		<h:outputText id="msgTipo" value=" Tipo"/>
+									<p:inputText id="txtTipo" disabled="true" binding="#{canchaView.txtTipo}"/>
+																		<h:outputText id="msgUbicacion" value=" Ubicacion"/>
+									<p:inputText id="txtUbicacion" disabled="true" binding="#{canchaView.txtUbicacion}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{canchaView.btnSave}" value="Save" action="#{canchaView.action_save()}" update=":dialogCancha :frm:panelDataTableCancha" />
+									<p:commandButton id="btnClear" value="Clear" action="#{canchaView.action_clear()}" update=":dialogCancha" />
+									<p:commandButton id="btnExit" value="Exit" action="#{canchaView.action_closeDialog()}" update=":dialogCancha" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

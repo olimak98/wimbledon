@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelTorneo" header="Torneo">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgTorneoId" value="TorneoId"/>
+						 	<p:inputText id="txtTorneoId" binding="#{torneoView.txtTorneoId}">
+						 		<p:ajax update="panelTorneo,msg,panelBotones" listener="#{torneoView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgCupos" value=" Cupos"/>
+							<p:inputText id="txtCupos" disabled="true" binding="#{torneoView.txtCupos}"/>
+													<h:outputText id="msgCuposDisponibles" value=" CuposDisponibles"/>
+							<p:inputText id="txtCuposDisponibles" disabled="true" binding="#{torneoView.txtCuposDisponibles}"/>
+													<h:outputText id="msgDraw" value=" Draw"/>
+							<p:inputText id="txtDraw" disabled="true" binding="#{torneoView.txtDraw}"/>
+													<h:outputText id="msgEstado" value=" Estado"/>
+							<p:inputText id="txtEstado" disabled="true" binding="#{torneoView.txtEstado}"/>
+													<h:outputText id="msgNombre" value=" Nombre"/>
+							<p:inputText id="txtNombre" disabled="true" binding="#{torneoView.txtNombre}"/>
+													<h:outputText id="msgDirectorId_Director" value=" DirectorId_Director"/>
+							<p:inputText id="txtDirectorId_Director" disabled="true" binding="#{torneoView.txtDirectorId_Director}"/>
+												
+																				<h:outputText id="msgFechaInicio" value=" FechaInicio"/>
+														<p:calendar showOn="button" navigator="true" locale="en" 
+							binding="#{torneoView.txtFechaInicio}" >
+								<p:ajax event="dateSelect" listener="#{torneoView.listener_txtFechaInicio}" />
+							</p:calendar>
+																	   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{torneoView.btnSave}" disabled="true" value="Save" action="#{torneoView.action_save()}" update="panelTorneo,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{torneoView.btnDelete}" disabled="true" value="Delete" action="#{torneoView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelTorneo,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{torneoView.action_clear()}" update="panelTorneo,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

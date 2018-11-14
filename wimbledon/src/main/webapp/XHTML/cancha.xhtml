@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelCancha" header="Cancha">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgCanchaId" value="CanchaId"/>
+						 	<p:inputText id="txtCanchaId" binding="#{canchaView.txtCanchaId}">
+						 		<p:ajax update="panelCancha,msg,panelBotones" listener="#{canchaView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgDimensiones" value=" Dimensiones"/>
+							<p:inputText id="txtDimensiones" disabled="true" binding="#{canchaView.txtDimensiones}"/>
+													<h:outputText id="msgEstado" value=" Estado"/>
+							<p:inputText id="txtEstado" disabled="true" binding="#{canchaView.txtEstado}"/>
+													<h:outputText id="msgNombre" value=" Nombre"/>
+							<p:inputText id="txtNombre" disabled="true" binding="#{canchaView.txtNombre}"/>
+													<h:outputText id="msgTipo" value=" Tipo"/>
+							<p:inputText id="txtTipo" disabled="true" binding="#{canchaView.txtTipo}"/>
+													<h:outputText id="msgUbicacion" value=" Ubicacion"/>
+							<p:inputText id="txtUbicacion" disabled="true" binding="#{canchaView.txtUbicacion}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{canchaView.btnSave}" disabled="true" value="Save" action="#{canchaView.action_save()}" update="panelCancha,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{canchaView.btnDelete}" disabled="true" value="Delete" action="#{canchaView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelCancha,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{canchaView.action_clear()}" update="panelCancha,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

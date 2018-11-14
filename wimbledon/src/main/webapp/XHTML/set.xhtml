@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelSet" header="Set">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgSetId" value="SetId"/>
+						 	<p:inputText id="txtSetId" binding="#{setView.txtSetId}">
+						 		<p:ajax update="panelSet,msg,panelBotones" listener="#{setView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgPuntosEquipo1" value=" PuntosEquipo1"/>
+							<p:inputText id="txtPuntosEquipo1" disabled="true" binding="#{setView.txtPuntosEquipo1}"/>
+													<h:outputText id="msgPuntosEquipo2" value=" PuntosEquipo2"/>
+							<p:inputText id="txtPuntosEquipo2" disabled="true" binding="#{setView.txtPuntosEquipo2}"/>
+													<h:outputText id="msgEquipoId_Equipo" value=" EquipoId_Equipo"/>
+							<p:inputText id="txtEquipoId_Equipo" disabled="true" binding="#{setView.txtEquipoId_Equipo}"/>
+													<h:outputText id="msgPartidoId_Partido" value=" PartidoId_Partido"/>
+							<p:inputText id="txtPartidoId_Partido" disabled="true" binding="#{setView.txtPartidoId_Partido}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{setView.btnSave}" disabled="true" value="Save" action="#{setView.action_save()}" update="panelSet,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{setView.btnDelete}" disabled="true" value="Delete" action="#{setView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelSet,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{setView.action_clear()}" update="panelSet,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

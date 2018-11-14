@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTablePartido" header="PartidoData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{partidoView.data}" var="partido"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{partido.partidoId}" sortBy="#{partido.partidoId}" >
+										 <f:facet name="header">
+										<h:outputText value="partidoId"/>
+										</f:facet>
+										 <h:outputText value="#{partido.partidoId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{partido.duracion}" sortBy="#{partido.duracion}" >
+										 <f:facet name="header">
+										<h:outputText value="Duracion"/>
+										</f:facet>
+										 <h:outputText value="#{partido.duracion}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.estado}" sortBy="#{partido.estado}" >
+										 <f:facet name="header">
+										<h:outputText value="Estado"/>
+										</f:facet>
+										 <h:outputText value="#{partido.estado}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.fecha}" sortBy="#{partido.fecha}" >
+										 <f:facet name="header">
+										<h:outputText value="Fecha"/>
+										</f:facet>
+										 <h:outputText value="#{partido.fecha}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.numeroEncuentro}" sortBy="#{partido.numeroEncuentro}" >
+										 <f:facet name="header">
+										<h:outputText value="NumeroEncuentro"/>
+										</f:facet>
+										 <h:outputText value="#{partido.numeroEncuentro}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.puntuacion}" sortBy="#{partido.puntuacion}" >
+										 <f:facet name="header">
+										<h:outputText value="Puntuacion"/>
+										</f:facet>
+										 <h:outputText value="#{partido.puntuacion}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.canchaId_Cancha}" sortBy="#{partido.canchaId_Cancha}" >
+										 <f:facet name="header">
+										<h:outputText value="CanchaId_Cancha"/>
+										</f:facet>
+										 <h:outputText value="#{partido.canchaId_Cancha}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.equipoId_Equipo}" sortBy="#{partido.equipoId_Equipo}" >
+										 <f:facet name="header">
+										<h:outputText value="EquipoId_Equipo"/>
+										</f:facet>
+										 <h:outputText value="#{partido.equipoId_Equipo}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.juezId_Juez}" sortBy="#{partido.juezId_Juez}" >
+										 <f:facet name="header">
+										<h:outputText value="JuezId_Juez"/>
+										</f:facet>
+										 <h:outputText value="#{partido.juezId_Juez}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{partido.rondaId_Ronda}" sortBy="#{partido.rondaId_Ronda}" >
+										 <f:facet name="header">
+										<h:outputText value="RondaId_Ronda"/>
+										</f:facet>
+										 <h:outputText value="#{partido.rondaId_Ronda}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogPartido"
+										actionListener="#{partidoView.action_edit}">
+										<f:attribute name="selectedPartido" value="#{partido}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{partidoView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedPartido" value="#{partido}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{partidoView.action_new()}" update=":dialogPartido" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogPartido" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{partidoView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelPartido" header="Partido">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgPartidoId" value="PartidoId"/>
+									 <p:inputText id="txtPartidoId" binding="#{partidoView.txtPartidoId}">
+									 <p:ajax update=":dialogPartido" listener="#{partidoView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgDuracion" value=" Duracion"/>
+									<p:inputText id="txtDuracion" disabled="true" binding="#{partidoView.txtDuracion}"/>
+																		<h:outputText id="msgEstado" value=" Estado"/>
+									<p:inputText id="txtEstado" disabled="true" binding="#{partidoView.txtEstado}"/>
+																		<h:outputText id="msgNumeroEncuentro" value=" NumeroEncuentro"/>
+									<p:inputText id="txtNumeroEncuentro" disabled="true" binding="#{partidoView.txtNumeroEncuentro}"/>
+																		<h:outputText id="msgPuntuacion" value=" Puntuacion"/>
+									<p:inputText id="txtPuntuacion" disabled="true" binding="#{partidoView.txtPuntuacion}"/>
+																		<h:outputText id="msgCanchaId_Cancha" value=" CanchaId_Cancha"/>
+									<p:inputText id="txtCanchaId_Cancha" disabled="true" binding="#{partidoView.txtCanchaId_Cancha}"/>
+																		<h:outputText id="msgEquipoId_Equipo" value=" EquipoId_Equipo"/>
+									<p:inputText id="txtEquipoId_Equipo" disabled="true" binding="#{partidoView.txtEquipoId_Equipo}"/>
+																		<h:outputText id="msgJuezId_Juez" value=" JuezId_Juez"/>
+									<p:inputText id="txtJuezId_Juez" disabled="true" binding="#{partidoView.txtJuezId_Juez}"/>
+																		<h:outputText id="msgRondaId_Ronda" value=" RondaId_Ronda"/>
+									<p:inputText id="txtRondaId_Ronda" disabled="true" binding="#{partidoView.txtRondaId_Ronda}"/>
+																		
+																													<h:outputText id="msgFecha" value=" Fecha"/>
+																				<p:calendar showOn="button" navigator="true" locale="en" 
+										binding="#{partidoView.txtFecha}" >
+										<p:ajax event="dateSelect" listener="#{partidoView.listener_txtFecha}"  />
+										</p:calendar>
+																										    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{partidoView.btnSave}" value="Save" action="#{partidoView.action_save()}" update=":dialogPartido :frm:panelDataTablePartido" />
+									<p:commandButton id="btnClear" value="Clear" action="#{partidoView.action_clear()}" update=":dialogPartido" />
+									<p:commandButton id="btnExit" value="Exit" action="#{partidoView.action_closeDialog()}" update=":dialogPartido" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

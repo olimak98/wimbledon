@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableReservaCancha" header="ReservaCanchaData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{reservaCanchaView.data}" var="reservaCancha"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{reservaCancha.reservaCanchaId}" sortBy="#{reservaCancha.reservaCanchaId}" >
+										 <f:facet name="header">
+										<h:outputText value="reservaCanchaId"/>
+										</f:facet>
+										 <h:outputText value="#{reservaCancha.reservaCanchaId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{reservaCancha.fecha}" sortBy="#{reservaCancha.fecha}" >
+										 <f:facet name="header">
+										<h:outputText value="Fecha"/>
+										</f:facet>
+										 <h:outputText value="#{reservaCancha.fecha}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{reservaCancha.canchaId_Cancha}" sortBy="#{reservaCancha.canchaId_Cancha}" >
+										 <f:facet name="header">
+										<h:outputText value="CanchaId_Cancha"/>
+										</f:facet>
+										 <h:outputText value="#{reservaCancha.canchaId_Cancha}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{reservaCancha.partidoId_Partido}" sortBy="#{reservaCancha.partidoId_Partido}" >
+										 <f:facet name="header">
+										<h:outputText value="PartidoId_Partido"/>
+										</f:facet>
+										 <h:outputText value="#{reservaCancha.partidoId_Partido}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogReservaCancha"
+										actionListener="#{reservaCanchaView.action_edit}">
+										<f:attribute name="selectedReservaCancha" value="#{reservaCancha}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{reservaCanchaView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedReservaCancha" value="#{reservaCancha}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{reservaCanchaView.action_new()}" update=":dialogReservaCancha" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogReservaCancha" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{reservaCanchaView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelReservaCancha" header="ReservaCancha">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgReservaCanchaId" value="ReservaCanchaId"/>
+									 <p:inputText id="txtReservaCanchaId" binding="#{reservaCanchaView.txtReservaCanchaId}">
+									 <p:ajax update=":dialogReservaCancha" listener="#{reservaCanchaView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgCanchaId_Cancha" value=" CanchaId_Cancha"/>
+									<p:inputText id="txtCanchaId_Cancha" disabled="true" binding="#{reservaCanchaView.txtCanchaId_Cancha}"/>
+																		<h:outputText id="msgPartidoId_Partido" value=" PartidoId_Partido"/>
+									<p:inputText id="txtPartidoId_Partido" disabled="true" binding="#{reservaCanchaView.txtPartidoId_Partido}"/>
+																		
+																													<h:outputText id="msgFecha" value=" Fecha"/>
+																				<p:calendar showOn="button" navigator="true" locale="en" 
+										binding="#{reservaCanchaView.txtFecha}" >
+										<p:ajax event="dateSelect" listener="#{reservaCanchaView.listener_txtFecha}"  />
+										</p:calendar>
+																										    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{reservaCanchaView.btnSave}" value="Save" action="#{reservaCanchaView.action_save()}" update=":dialogReservaCancha :frm:panelDataTableReservaCancha" />
+									<p:commandButton id="btnClear" value="Clear" action="#{reservaCanchaView.action_clear()}" update=":dialogReservaCancha" />
+									<p:commandButton id="btnExit" value="Exit" action="#{reservaCanchaView.action_closeDialog()}" update=":dialogReservaCancha" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

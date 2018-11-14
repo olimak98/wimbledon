@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelRonda" header="Ronda">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgRondaId" value="RondaId"/>
+						 	<p:inputText id="txtRondaId" binding="#{rondaView.txtRondaId}">
+						 		<p:ajax update="panelRonda,msg,panelBotones" listener="#{rondaView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgNumero" value=" Numero"/>
+							<p:inputText id="txtNumero" disabled="true" binding="#{rondaView.txtNumero}"/>
+													<h:outputText id="msgPremio" value=" Premio"/>
+							<p:inputText id="txtPremio" disabled="true" binding="#{rondaView.txtPremio}"/>
+													<h:outputText id="msgPuntosAtp" value=" PuntosAtp"/>
+							<p:inputText id="txtPuntosAtp" disabled="true" binding="#{rondaView.txtPuntosAtp}"/>
+													<h:outputText id="msgTorneoId_Torneo" value=" TorneoId_Torneo"/>
+							<p:inputText id="txtTorneoId_Torneo" disabled="true" binding="#{rondaView.txtTorneoId_Torneo}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{rondaView.btnSave}" disabled="true" value="Save" action="#{rondaView.action_save()}" update="panelRonda,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{rondaView.btnDelete}" disabled="true" value="Delete" action="#{rondaView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelRonda,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{rondaView.action_clear()}" update="panelRonda,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

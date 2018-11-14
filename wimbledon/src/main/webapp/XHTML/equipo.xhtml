@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelEquipo" header="Equipo">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgEquipoId" value="EquipoId"/>
+						 	<p:inputText id="txtEquipoId" binding="#{equipoView.txtEquipoId}">
+						 		<p:ajax update="panelEquipo,msg,panelBotones" listener="#{equipoView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgEstado" value=" Estado"/>
+							<p:inputText id="txtEstado" disabled="true" binding="#{equipoView.txtEstado}"/>
+													<h:outputText id="msgNombre" value=" Nombre"/>
+							<p:inputText id="txtNombre" disabled="true" binding="#{equipoView.txtNombre}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{equipoView.btnSave}" disabled="true" value="Save" action="#{equipoView.action_save()}" update="panelEquipo,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{equipoView.btnDelete}" disabled="true" value="Delete" action="#{equipoView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelEquipo,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{equipoView.action_clear()}" update="panelEquipo,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

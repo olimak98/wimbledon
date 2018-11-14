@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableJugador" header="JugadorData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{jugadorView.data}" var="jugador"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{jugador.jugadorId}" sortBy="#{jugador.jugadorId}" >
+										 <f:facet name="header">
+										<h:outputText value="jugadorId"/>
+										</f:facet>
+										 <h:outputText value="#{jugador.jugadorId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{jugador.ranking}" sortBy="#{jugador.ranking}" >
+										 <f:facet name="header">
+										<h:outputText value="Ranking"/>
+										</f:facet>
+										 <h:outputText value="#{jugador.ranking}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{jugador.personaId_Persona}" sortBy="#{jugador.personaId_Persona}" >
+										 <f:facet name="header">
+										<h:outputText value="PersonaId_Persona"/>
+										</f:facet>
+										 <h:outputText value="#{jugador.personaId_Persona}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogJugador"
+										actionListener="#{jugadorView.action_edit}">
+										<f:attribute name="selectedJugador" value="#{jugador}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{jugadorView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedJugador" value="#{jugador}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{jugadorView.action_new()}" update=":dialogJugador" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogJugador" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{jugadorView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelJugador" header="Jugador">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgJugadorId" value="JugadorId"/>
+									 <p:inputText id="txtJugadorId" binding="#{jugadorView.txtJugadorId}">
+									 <p:ajax update=":dialogJugador" listener="#{jugadorView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgRanking" value=" Ranking"/>
+									<p:inputText id="txtRanking" disabled="true" binding="#{jugadorView.txtRanking}"/>
+																		<h:outputText id="msgPersonaId_Persona" value=" PersonaId_Persona"/>
+									<p:inputText id="txtPersonaId_Persona" disabled="true" binding="#{jugadorView.txtPersonaId_Persona}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{jugadorView.btnSave}" value="Save" action="#{jugadorView.action_save()}" update=":dialogJugador :frm:panelDataTableJugador" />
+									<p:commandButton id="btnClear" value="Clear" action="#{jugadorView.action_clear()}" update=":dialogJugador" />
+									<p:commandButton id="btnExit" value="Exit" action="#{jugadorView.action_closeDialog()}" update=":dialogJugador" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+

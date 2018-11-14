@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTablePersona" header="PersonaData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{personaView.data}" var="persona"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{persona.personaId}" sortBy="#{persona.personaId}" >
+										 <f:facet name="header">
+										<h:outputText value="personaId"/>
+										</f:facet>
+										 <h:outputText value="#{persona.personaId}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{persona.fechaNacimiento}" sortBy="#{persona.fechaNacimiento}" >
+										 <f:facet name="header">
+										<h:outputText value="FechaNacimiento"/>
+										</f:facet>
+										 <h:outputText value="#{persona.fechaNacimiento}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{persona.identificacion}" sortBy="#{persona.identificacion}" >
+										 <f:facet name="header">
+										<h:outputText value="Identificacion"/>
+										</f:facet>
+										 <h:outputText value="#{persona.identificacion}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{persona.nombreCompleto}" sortBy="#{persona.nombreCompleto}" >
+										 <f:facet name="header">
+										<h:outputText value="NombreCompleto"/>
+										</f:facet>
+										 <h:outputText value="#{persona.nombreCompleto}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{persona.tipoIdentificacion}" sortBy="#{persona.tipoIdentificacion}" >
+										 <f:facet name="header">
+										<h:outputText value="TipoIdentificacion"/>
+										</f:facet>
+										 <h:outputText value="#{persona.tipoIdentificacion}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{persona.paisId_Pais}" sortBy="#{persona.paisId_Pais}" >
+										 <f:facet name="header">
+										<h:outputText value="PaisId_Pais"/>
+										</f:facet>
+										 <h:outputText value="#{persona.paisId_Pais}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogPersona"
+										actionListener="#{personaView.action_edit}">
+										<f:attribute name="selectedPersona" value="#{persona}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{personaView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedPersona" value="#{persona}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{personaView.action_new()}" update=":dialogPersona" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogPersona" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{personaView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelPersona" header="Persona">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgPersonaId" value="PersonaId"/>
+									 <p:inputText id="txtPersonaId" binding="#{personaView.txtPersonaId}">
+									 <p:ajax update=":dialogPersona" listener="#{personaView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgIdentificacion" value=" Identificacion"/>
+									<p:inputText id="txtIdentificacion" disabled="true" binding="#{personaView.txtIdentificacion}"/>
+																		<h:outputText id="msgNombreCompleto" value=" NombreCompleto"/>
+									<p:inputText id="txtNombreCompleto" disabled="true" binding="#{personaView.txtNombreCompleto}"/>
+																		<h:outputText id="msgTipoIdentificacion" value=" TipoIdentificacion"/>
+									<p:inputText id="txtTipoIdentificacion" disabled="true" binding="#{personaView.txtTipoIdentificacion}"/>
+																		<h:outputText id="msgPaisId_Pais" value=" PaisId_Pais"/>
+									<p:inputText id="txtPaisId_Pais" disabled="true" binding="#{personaView.txtPaisId_Pais}"/>
+																		
+																													<h:outputText id="msgFechaNacimiento" value=" FechaNacimiento"/>
+																				<p:calendar showOn="button" navigator="true" locale="en" 
+										binding="#{personaView.txtFechaNacimiento}" >
+										<p:ajax event="dateSelect" listener="#{personaView.listener_txtFechaNacimiento}"  />
+										</p:calendar>
+																										    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{personaView.btnSave}" value="Save" action="#{personaView.action_save()}" update=":dialogPersona :frm:panelDataTablePersona" />
+									<p:commandButton id="btnClear" value="Clear" action="#{personaView.action_clear()}" update=":dialogPersona" />
+									<p:commandButton id="btnExit" value="Exit" action="#{personaView.action_closeDialog()}" update=":dialogPersona" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+
