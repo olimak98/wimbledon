@@ -79,8 +79,6 @@ Servers/
 target/
 build/
 .DS_Store
-sentinel*
-persistence.xml
 EncodeHTML/
 *.jasper
 
