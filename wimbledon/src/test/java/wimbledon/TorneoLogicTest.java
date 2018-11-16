@@ -1,6 +1,5 @@
 package wimbledon;
 
-import static org.junit.Assert.*;
 
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.edu.usbcali.wimbledon.dataaccess.dao.IDirectorDAO;
 import co.edu.usbcali.wimbledon.modelo.Director;
 import co.edu.usbcali.wimbledon.modelo.Pais;
 import co.edu.usbcali.wimbledon.modelo.Persona;
@@ -25,7 +23,7 @@ import co.edu.usbcali.wimbledon.modelo.control.IDirectorLogic;
 import co.edu.usbcali.wimbledon.modelo.control.ITorneoLogic;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/applicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 @Rollback(false)
 public class TorneoLogicTest {
 	
