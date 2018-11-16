@@ -28,15 +28,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "partido", schema = "public")
 public class Partido implements java.io.Serializable {
     private Integer partidoId;
-    @NotNull
     private Cancha cancha;
     @NotNull
     private Equipo equipoByEquipo1Id;
     @NotNull
     private Equipo equipoByEquipo2Id;
-    @NotNull
     private Equipo equipoByEquipoGanadorId;
-    @NotNull
     private Juez juez;
     @NotNull
     private Ronda ronda;

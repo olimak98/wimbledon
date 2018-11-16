@@ -977,7 +977,7 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
 	}
     
     public void inscribirEquipo(EquipoTorneo equipoTorneo) throws Exception {
-    	torneoLogic.inscribirEquipo(equipoTorneo);
+    	//torneoLogic.inscribirEquipo(equipoTorneo);
     }
     
     public List<Partido> listarPendientes() throws Exception {
@@ -987,4 +987,9 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
     public void asignarCancha(ReservaCancha reservaCancha) throws Exception{
     	canchaLogic.asignarCancha(reservaCancha);
     }
+
+	@Override
+	public List<Equipo[]> generateDrawTemplate(Torneo torneo) throws Exception {
+		return torneoLogic.generateDrawTemplate(torneo);
+	}
 }

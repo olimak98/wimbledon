@@ -430,4 +430,6 @@ public interface IBusinessDelegatorView {
 	public EquipoDTO getEquipoDTOByPartido(Integer equipoId, Integer partido) throws Exception;
 
 	public List<EquipoDTO> darPunto(EquipoDTO equipo, EquipoDTO equipoDTO, Partido partido) throws Exception;
+	
+	public List<Equipo[]> generateDrawTemplate(Torneo torneo) throws Exception;
 }

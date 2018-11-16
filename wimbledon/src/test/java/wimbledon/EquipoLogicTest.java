@@ -79,7 +79,7 @@ public class EquipoLogicTest {
 		equipoTorneo.setEquipo(equipo);		
 		equipoTorneo.setTorneo(torneo);
 		
-		torneoLogic.inscribirEquipo(equipoTorneo);
+		//torneoLogic.inscribirEquipo(equipoTorneo);
 	}
 	
 	@Test

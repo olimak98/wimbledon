@@ -34,6 +34,7 @@ public class Equipo implements java.io.Serializable {
     @NotEmpty
     @Size(max = 255)
     private String nombre;
+    private Integer ranking;
     private Set<EquipoTorneo> equipoTorneos = new HashSet<EquipoTorneo>(0);
     private Set<JugadorEquipo> jugadorEquipos = new HashSet<JugadorEquipo>(0);
     private Set<Partido> partidosForEquipo1Id = new HashSet<Partido>(0);
@@ -154,4 +155,13 @@ public class Equipo implements java.io.Serializable {
     public void setSetsForEquipo2Id(Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo2Id) {
         this.setsForEquipo2Id = setsForEquipo2Id;
     }
+
+    @Column(name = "ranking")
+	public Integer getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(Integer ranking) {
+		this.ranking = ranking;
+	}
 }
