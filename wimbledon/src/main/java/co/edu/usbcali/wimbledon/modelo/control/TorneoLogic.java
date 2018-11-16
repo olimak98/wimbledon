@@ -509,6 +509,8 @@ public class TorneoLogic implements ITorneoLogic {
         return list;
     }
     
+    @Override
+    @Transactional(readOnly = true)
     public List<TorneoDTO> listarActivos() throws Exception{
     	try {
     		return torneoDAO.listarActivos();
