@@ -50,4 +50,6 @@ public interface IEquipoLogic {
     public List<EquipoDTO> getDataEquipo() throws Exception;
 
     public void validateEquipo(Equipo equipo) throws Exception;
+    
+    public EquipoDTO buscar(String nombre) throws Exception;
 }

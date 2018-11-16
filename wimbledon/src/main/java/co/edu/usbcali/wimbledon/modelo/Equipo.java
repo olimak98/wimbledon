@@ -38,8 +38,8 @@ public class Equipo implements java.io.Serializable {
     private Set<Partido> partidosForEquipo1Id = new HashSet<Partido>(0);
     private Set<Partido> partidosForEquipo2Id = new HashSet<Partido>(0);
     private Set<Partido> partidosForEquipoGanadorId = new HashSet<Partido>(0);
-    private Set<Set> setsForEquipo1Id = new HashSet<Set>(0);
-    private Set<Set> setsForEquipo2Id = new HashSet<Set>(0);
+    private Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo1Id = new HashSet<co.edu.usbcali.wimbledon.modelo.Set>(0);
+    private Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo2Id = new HashSet<co.edu.usbcali.wimbledon.modelo.Set>(0);
 
     public Equipo() {
     }
@@ -47,8 +47,8 @@ public class Equipo implements java.io.Serializable {
     public Equipo(Integer equipoId, Set<EquipoTorneo> equipoTorneos,
         String estado, Set<JugadorEquipo> jugadorEquipos, String nombre,
         Set<Partido> partidosForEquipo1Id, Set<Partido> partidosForEquipo2Id,
-        Set<Partido> partidosForEquipoGanadorId, Set<Set> setsForEquipo1Id,
-        Set<Set> setsForEquipo2Id) {
+        Set<Partido> partidosForEquipoGanadorId, Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo1Id,
+        Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo2Id) {
         this.equipoId = equipoId;
         this.estado = estado;
         this.nombre = nombre;
@@ -136,20 +136,20 @@ public class Equipo implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
-    public Set<Set> getSetsForEquipo1Id() {
+    public Set<co.edu.usbcali.wimbledon.modelo.Set> getSetsForEquipo1Id() {
         return this.setsForEquipo1Id;
     }
 
-    public void setSetsForEquipo1Id(Set<Set> setsForEquipo1Id) {
+    public void setSetsForEquipo1Id(Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo1Id) {
         this.setsForEquipo1Id = setsForEquipo1Id;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
-    public Set<Set> getSetsForEquipo2Id() {
+    public Set<co.edu.usbcali.wimbledon.modelo.Set> getSetsForEquipo2Id() {
         return this.setsForEquipo2Id;
     }
 
-    public void setSetsForEquipo2Id(Set<Set> setsForEquipo2Id) {
+    public void setSetsForEquipo2Id(Set<co.edu.usbcali.wimbledon.modelo.Set> setsForEquipo2Id) {
         this.setsForEquipo2Id = setsForEquipo2Id;
     }
 }

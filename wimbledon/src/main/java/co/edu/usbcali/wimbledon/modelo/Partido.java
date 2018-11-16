@@ -49,7 +49,7 @@ public class Partido implements java.io.Serializable {
     private Integer numeroEncuentro;
     private String puntuacion;
     private Set<ReservaCancha> reservaCanchas = new HashSet<ReservaCancha>(0);
-    private Set<Set> sets = new HashSet<Set>(0);
+    private Set<co.edu.usbcali.wimbledon.modelo.Set> sets = new HashSet<co.edu.usbcali.wimbledon.modelo.Set>(0);
 
     public Partido() {
     }
@@ -58,7 +58,7 @@ public class Partido implements java.io.Serializable {
         Equipo equipoByEquipo1Id, Equipo equipoByEquipo2Id,
         Equipo equipoByEquipoGanadorId, String estado, Date fecha, Juez juez,
         Integer numeroEncuentro, String puntuacion,
-        Set<ReservaCancha> reservaCanchas, Ronda ronda, Set<Set> sets) {
+        Set<ReservaCancha> reservaCanchas, Ronda ronda, Set<co.edu.usbcali.wimbledon.modelo.Set> sets) {
         this.partidoId = partidoId;
         this.cancha = cancha;
         this.equipoByEquipo1Id = equipoByEquipo1Id;
@@ -200,11 +200,11 @@ public class Partido implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "partido")
-    public Set<Set> getSets() {
+    public Set<co.edu.usbcali.wimbledon.modelo.Set> getSets() {
         return this.sets;
     }
 
-    public void setSets(Set<Set> sets) {
+    public void setSets(Set<co.edu.usbcali.wimbledon.modelo.Set> sets) {
         this.sets = sets;
     }
 }

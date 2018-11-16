@@ -481,4 +481,14 @@ public class EquipoLogic implements IEquipoLogic {
 
         return list;
     }
+    
+    public EquipoDTO buscar(String nombreEquipo) throws Exception{
+    	EquipoDTO equipo = new EquipoDTO();
+    	try {
+    		
+    	}catch(Exception e) {
+    		
+    	}
+    	return null;
+    }
 }
