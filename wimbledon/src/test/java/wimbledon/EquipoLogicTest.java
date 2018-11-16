@@ -10,7 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import co.edu.usbcali.wimbledon.modelo.Equipo;
+import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
+import co.edu.usbcali.wimbledon.modelo.Torneo;
+import co.edu.usbcali.wimbledon.modelo.control.IEquipoLogic;
+import co.edu.usbcali.wimbledon.modelo.control.IEquipoTorneoLogic;
 import co.edu.usbcali.wimbledon.modelo.control.ITorneoLogic;
 import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
 
@@ -24,17 +31,45 @@ public class EquipoLogicTest {
 	@Autowired
 	private ITorneoLogic torneoLogic;
 	
+	@Autowired
+	private IEquipoLogic equipoLogic;
+	
+	@Autowired
+	private IEquipoTorneoLogic equipoTorneoLogic;
+	
 	@Test
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
 	public void atest()throws Exception {	
 		
-		List<TorneoDTO> torneos= torneoLogic.listarActivos();
-		for (TorneoDTO torneoDTO : torneos) {
+		List<Torneo> torneos= torneoLogic.listarActivos();
+		for (Torneo torneoDTO : torneos) {
 			log.info("El nombre del país es: " + torneoDTO.getNombre() );
 			log.info("El nombre del departamento es: " + torneoDTO.getCupos());
 		}
-				
 	}
 	
+	@Test
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
+	public void btest()throws Exception {	
+		
+		Equipo equipo= equipoLogic.buscar("Alejo");
+			log.info("El nombre del país es: " + equipo.getNombre() );
+			log.info("El nombre del departamento es: " + equipo.getEstado());
+	}
+	
+	@Test
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
+	public void ctest()throws Exception {	
+		
+		EquipoTorneo equipoTorneo = new EquipoTorneo();
+		Equipo equipo = equipoLogic.getEquipo(1);
+		Torneo torneo = torneoLogic.getTorneo(1);
+		equipoTorneo.setEquipo(equipo);		
+		equipoTorneo.setTorneo(torneo);
+		
+		torneoLogic.inscribirEquipo(equipoTorneo);
+		
+			
+	}
 	
 }

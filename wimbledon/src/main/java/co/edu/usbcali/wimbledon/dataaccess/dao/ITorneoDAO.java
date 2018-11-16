@@ -13,5 +13,5 @@ import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
 */
 public interface ITorneoDAO extends Dao<Torneo, Integer> {
 	
-	public List<TorneoDTO> listarActivos() throws Exception;
+	public List<Torneo> listarActivos() throws Exception;
 }

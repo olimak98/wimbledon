@@ -2,6 +2,7 @@ package co.edu.usbcali.wimbledon.modelo.control;
 
 import java.util.List;
 
+import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
 import co.edu.usbcali.wimbledon.modelo.Torneo;
 import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
 
@@ -51,5 +52,7 @@ public interface ITorneoLogic {
 
     public void validateTorneo(Torneo torneo) throws Exception;
     
-    public List<TorneoDTO> listarActivos() throws Exception;
+    public List<Torneo> listarActivos() throws Exception;
+    
+    public void inscribirEquipo(EquipoTorneo equipo) throws Exception;
 }

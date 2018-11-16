@@ -51,5 +51,5 @@ public interface IEquipoLogic {
 
     public void validateEquipo(Equipo equipo) throws Exception;
     
-    public EquipoDTO buscar(String nombre) throws Exception;
+    public Equipo buscar(String nombre) throws Exception;
 }

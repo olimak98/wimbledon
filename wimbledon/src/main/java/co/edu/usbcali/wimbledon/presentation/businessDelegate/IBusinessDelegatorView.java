@@ -417,7 +417,9 @@ public interface IBusinessDelegatorView {
 
     public void validateTorneo(Torneo torneo) throws Exception;
     
-    public EquipoDTO buscar(String nombreEquipo) throws Exception;
+    public Equipo buscar(String nombreEquipo) throws Exception;
     
-    public List<TorneoDTO> listarActivos() throws Exception;
+    public List<Torneo> listarActivos() throws Exception;
+    
+    public void inscribirEquipo(EquipoTorneo equipoTorneo) throws Exception;
 }

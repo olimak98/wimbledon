@@ -958,11 +958,15 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
         torneoLogic.validateTorneo(torneo);
     }
     
-    public EquipoDTO buscar(String nombreEquipo) throws Exception{
+    public Equipo buscar(String nombreEquipo) throws Exception{
     	return equipoLogic.buscar(nombreEquipo);
     }
     
-    public List<TorneoDTO> listarActivos() throws Exception{
+    public List<Torneo> listarActivos() throws Exception{
     	return torneoLogic.listarActivos();
+    }
+    
+    public void inscribirEquipo(EquipoTorneo equipoTorneo) throws Exception {
+    	torneoLogic.inscribirEquipo(equipoTorneo);
     }
 }
