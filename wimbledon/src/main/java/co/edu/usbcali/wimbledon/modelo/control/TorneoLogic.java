@@ -1,6 +1,8 @@
 package co.edu.usbcali.wimbledon.modelo.control;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -16,14 +18,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
 import com.hazelcast.client.util.RandomLB;
 
+import co.edu.usbcali.wimbledon.dataaccess.dao.IEquipoDAO;
 import co.edu.usbcali.wimbledon.dataaccess.dao.IEquipoTorneoDAO;
 import co.edu.usbcali.wimbledon.dataaccess.dao.IJuezTorneoDAO;
+import co.edu.usbcali.wimbledon.dataaccess.dao.IJugadorDAO;
 import co.edu.usbcali.wimbledon.dataaccess.dao.IRondaDAO;
 import co.edu.usbcali.wimbledon.dataaccess.dao.ITorneoDAO;
 import co.edu.usbcali.wimbledon.dto.mapper.ITorneoMapper;
 import co.edu.usbcali.wimbledon.exceptions.ZMessManager;
+import co.edu.usbcali.wimbledon.modelo.Equipo;
 import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
 import co.edu.usbcali.wimbledon.modelo.JuezTorneo;
 import co.edu.usbcali.wimbledon.modelo.Jugador;
@@ -75,6 +81,12 @@ public class TorneoLogic implements ITorneoLogic {
     */
     @Autowired
     private IRondaDAO rondaDAO;
+    
+    @Autowired
+    private IEquipoLogic equipoLogic;
+    
+    @Autowired
+    private IJugadorLogic jugadorLogic;
 
     /**
     * Logic injected by Spring that manages Director entities
@@ -105,17 +117,63 @@ public class TorneoLogic implements ITorneoLogic {
         }
     }
     
-    public void generateDrawTemplate(Torneo torneo) {    	
+    public List<Jugador[]> generateDrawTemplate(Torneo torneo) {
     	Set<EquipoTorneo> equipos = torneo.getEquipoTorneos();
-    	int[] rankings = null;
-    	for (EquipoTorneo equipoTorneo : equipos) {
-			Set<JugadorEquipo> jugadores = equipoTorneo.getEquipo().getJugadorEquipos();
-			rankings = new int[jugadores.size()];			
+    	List<Jugador> rankings = new ArrayList<>();
+		for (EquipoTorneo equipoTorneo : equipos) {
+			Equipo e;
+			try {
+				e = equipoLogic.getEquipo(equipoTorneo.getEquipo().getEquipoId());
+				Set<JugadorEquipo> jugadores = e.getJugadorEquipos();
+				for (JugadorEquipo jugador : jugadores) {
+					Jugador j = jugadorLogic.getJugador(jugador.getJugadorEquipoId());
+					rankings.add(j);
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}	
 		}
-		sort(rankings, rankings);
 		
+		Collections.sort(rankings, new Comparator<Jugador>() {
+			public int compare(Jugador o1, Jugador o2) {
+	            return o2.getRanking().compareTo(o1.getRanking());
+	        }
+	    });		
+		List<Jugador> firstHalf = new ArrayList<>();
+		List<Jugador> secondHalf = new ArrayList<>();
+		List<Jugador[]> partidos = new ArrayList<>();
+		int x = rankings.size()/2 + (rankings.size()%2) - 1;
+		for(int i = 0; i < x; i++){
+		    firstHalf.add(rankings.get(i));
+		}
+		for(int i = x; i < rankings.size(); i++){
+		    secondHalf.add(rankings.get(i));
+		}
 		
+		while(firstHalf.size() != 0) {
+			int random1 = (int) (Math.random() * rankings.size()) + 1;
+			
+			int random2 = (int) (Math.random() * rankings.size()) + 1;			
+			
+			Jugador[] jugadores = {firstHalf.get(random1), secondHalf.get(random2)};
+			partidos.add(jugadores);
+			
+			firstHalf.remove(random1);
+			secondHalf.remove(random2);
+		}
+		return partidos;
+	}
+    
+    public void merge(List<Integer> list, int iIndex) {
+    	Integer i = list.get(iIndex); 
+    	Integer j = list.get(iIndex + 1);
+    	String changeI = Integer.toString(i);
+    	String changeJ = Integer.toString(j);
     	
+    	changeI = changeI + "-" + changeJ;
+    	int ret = Integer.parseInt(changeI);
+    	list.set(iIndex,ret);
+    	list.remove(iIndex + 1);
     }
     
     public void sort(int[] inputArr, int array[]) {
@@ -126,7 +184,7 @@ public class TorneoLogic implements ITorneoLogic {
         quickSort(0, inputArr.length - 1, array);
     }
  
-    private void quickSort(int lowerIndex, int higherIndex, int array[]) {
+    public void quickSort(int lowerIndex, int higherIndex, int array[]) {
          
         int i = lowerIndex;
         int j = higherIndex;
@@ -160,7 +218,7 @@ public class TorneoLogic implements ITorneoLogic {
             quickSort(i, higherIndex, array);
     }
  
-    private void exchangeNumbers(int i, int j, int array[]) {
+    public void exchangeNumbers(int i, int j, int array[]) {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -195,9 +253,6 @@ public class TorneoLogic implements ITorneoLogic {
 
             validateTorneo(entity);
 
-            if (getTorneo(entity.getTorneoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
 
             torneoDAO.save(entity);
             log.debug("save Torneo successful");

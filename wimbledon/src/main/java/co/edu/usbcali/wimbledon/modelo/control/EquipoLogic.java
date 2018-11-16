@@ -131,10 +131,6 @@ public class EquipoLogic implements IEquipoLogic {
 
             validateEquipo(entity);
 
-            if (getEquipo(entity.getEquipoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             equipoDAO.save(entity);
             log.debug("save Equipo successful");
         } catch (Exception e) {

@@ -130,9 +130,6 @@ public class PersonaLogic implements IPersonaLogic {
 
             validatePersona(entity);
 
-            if (getPersona(entity.getPersonaId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
 
             personaDAO.save(entity);
             log.debug("save Persona successful");
