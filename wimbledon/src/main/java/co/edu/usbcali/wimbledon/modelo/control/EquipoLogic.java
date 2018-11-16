@@ -481,7 +481,7 @@ public class EquipoLogic implements IEquipoLogic {
     }
     
     @Transactional(readOnly = true)
-    public EquipoDTO buscar(String nombreEquipo) throws Exception{
+    public Equipo buscar(String nombreEquipo) throws Exception{
     	try {
     		return equipoDAO.buscar(nombreEquipo);
     	}catch(Exception e) {

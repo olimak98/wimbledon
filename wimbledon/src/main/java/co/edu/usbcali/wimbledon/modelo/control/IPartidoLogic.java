@@ -55,4 +55,6 @@ public interface IPartidoLogic {
     public void validatePartido(Partido partido) throws Exception;
 
 	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Partido partido) throws Exception;
+	
+	public List<Partido> listarPendientes() throws Exception;
 }

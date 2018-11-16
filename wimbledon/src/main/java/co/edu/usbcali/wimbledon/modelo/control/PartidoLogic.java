@@ -504,4 +504,19 @@ public class PartidoLogic implements IPartidoLogic {
 			throw e;
 		}
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Partido> listarPendiente() throws Exception{
+		try {
+			return partidoDAO.listarPendientes();
+		}catch(Exception e) {
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Partido> listarPendientes() throws Exception {
+		return partidoDAO.listarPendientes();
+	}
 }

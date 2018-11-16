@@ -958,11 +958,11 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
         torneoLogic.validateTorneo(torneo);
     }
     
-    public EquipoDTO buscar(String nombreEquipo) throws Exception{
+    public Equipo buscar(String nombreEquipo) throws Exception{
     	return equipoLogic.buscar(nombreEquipo);
     }
     
-    public List<TorneoDTO> listarActivos() throws Exception{
+    public List<Torneo> listarActivos() throws Exception{
     	return torneoLogic.listarActivos();
     }
 
@@ -975,4 +975,16 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
 	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Partido partido) throws Exception {
 		return partidoLogic.darPunto(equipoGanador, equipoPerdedor, partido);
 	}
+    
+    public void inscribirEquipo(EquipoTorneo equipoTorneo) throws Exception {
+    	torneoLogic.inscribirEquipo(equipoTorneo);
+    }
+    
+    public List<Partido> listarPendientes() throws Exception {
+    	return partidoLogic.listarPendientes();
+    }
+    
+    public void asignarCancha(ReservaCancha reservaCancha) throws Exception{
+    	canchaLogic.asignarCancha(reservaCancha);
+    }
 }

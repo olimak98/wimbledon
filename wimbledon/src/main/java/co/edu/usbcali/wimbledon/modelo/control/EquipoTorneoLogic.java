@@ -20,6 +20,7 @@ import co.edu.usbcali.wimbledon.dataaccess.dao.IEquipoTorneoDAO;
 import co.edu.usbcali.wimbledon.dto.mapper.IEquipoTorneoMapper;
 import co.edu.usbcali.wimbledon.exceptions.ZMessManager;
 import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
+import co.edu.usbcali.wimbledon.modelo.Torneo;
 import co.edu.usbcali.wimbledon.modelo.dto.EquipoTorneoDTO;
 import co.edu.usbcali.wimbledon.utilities.Utilities;
 
@@ -105,12 +106,14 @@ public class EquipoTorneoLogic implements IEquipoTorneoLogic {
         log.debug("saving EquipoTorneo instance");
 
         try {
-            if (entity == null) {
-                throw new ZMessManager().new NullEntityExcepcion("EquipoTorneo");
-            }
 
             validateEquipoTorneo(entity);
 
+            Torneo torneo = entity.getTorneo();
+            if(torneo.getCuposDisponibles() >= 1) {
+            	torneo.setCuposDisponibles(torneo.getCuposDisponibles()-1);
+            	logicTorneo2.updateTorneo(entity.getTorneo());
+            }
             equipoTorneoDAO.save(entity);
             log.debug("save EquipoTorneo successful");
         } catch (Exception e) {
@@ -119,7 +122,9 @@ public class EquipoTorneoLogic implements IEquipoTorneoLogic {
         } finally {
         }
     }
-
+    
+    
+    
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void deleteEquipoTorneo(EquipoTorneo entity)
         throws Exception {

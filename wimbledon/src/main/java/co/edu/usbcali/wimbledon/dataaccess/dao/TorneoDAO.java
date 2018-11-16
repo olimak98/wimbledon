@@ -39,9 +39,10 @@ public class TorneoDAO extends JpaDaoImpl<Torneo, Integer> implements ITorneoDAO
     }
     
     @Override
-	public List<TorneoDTO> listarActivos() throws Exception {
-    	String jpql= "Select tor from Torneo tor where tor.estado=activo";
-		List<TorneoDTO> torneo = entityManager.createQuery(jpql).getResultList();
+	public List<Torneo> listarActivos() throws Exception {
+    	
+    	String jpql= "Select tor from Torneo tor where tor.cuposDisponibles > 0 and tor.estado='A'";
+		List<Torneo> torneo = entityManager.createQuery(jpql).getResultList();
 		return torneo;
     }
 }
