@@ -3,6 +3,7 @@ package co.edu.usbcali.wimbledon.modelo.control;
 import java.util.List;
 
 import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
+import co.edu.usbcali.wimbledon.modelo.Equipo;
 import co.edu.usbcali.wimbledon.modelo.Jugador;
 import co.edu.usbcali.wimbledon.modelo.Torneo;
 import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
@@ -55,7 +56,7 @@ public interface ITorneoLogic {
     
     public List<Torneo> listarActivos() throws Exception;
     
-    public List<Jugador[]> generateDrawTemplate(Torneo torneo);
+    public List<Equipo[]> generateDrawTemplate(Torneo torneo) throws Exception;
     
     public void sort(int[] inputArr, int array[]);
     

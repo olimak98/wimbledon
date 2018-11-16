@@ -34,6 +34,7 @@ import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
 import co.edu.usbcali.wimbledon.modelo.JuezTorneo;
 import co.edu.usbcali.wimbledon.modelo.Jugador;
 import co.edu.usbcali.wimbledon.modelo.JugadorEquipo;
+import co.edu.usbcali.wimbledon.modelo.Partido;
 import co.edu.usbcali.wimbledon.modelo.Ronda;
 import co.edu.usbcali.wimbledon.modelo.Torneo;
 import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
@@ -97,6 +98,8 @@ public class TorneoLogic implements ITorneoLogic {
     
     @Autowired
     IEquipoTorneoLogic equipoTorneoLogic;
+    @Autowired
+    IPartidoLogic partidoLogic;
 
     public void validateTorneo(Torneo torneo) throws Exception {
         try {
@@ -120,49 +123,87 @@ public class TorneoLogic implements ITorneoLogic {
         }
     }
     
-    public List<Jugador[]> generateDrawTemplate(Torneo torneo) {
+    @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+    public List<Equipo[]> generateDrawTemplate(Torneo torneo) throws Exception{
+    	torneo = getTorneo(torneo.getTorneoId());
+    	
+    	if(torneo.getEstado()!= "C") {
+    		throw new Exception("El torneo no se encuentra cerrado.");
+    	}
+    	if(torneo.getCuposDisponibles() != 0) {
+    		throw new Exception("El torneo cuenta con cupos disponibles.");
+    	}
+    	if(torneo.getDraw() != null || torneo.getDraw().equals("Vacío")) {
+    		throw new Exception("El torneo ya cuenta con un draw template");
+    	}
     	Set<EquipoTorneo> equipos = torneo.getEquipoTorneos();
-    	List<Jugador> rankings = new ArrayList<>();
+    	List<Equipo> rankings = new ArrayList<>();
+    	
 		for (EquipoTorneo equipoTorneo : equipos) {
 			Equipo e;
 			try {
 				e = equipoLogic.getEquipo(equipoTorneo.getEquipo().getEquipoId());
-				Set<JugadorEquipo> jugadores = e.getJugadorEquipos();
-				for (JugadorEquipo jugador : jugadores) {
-					Jugador j = jugadorLogic.getJugador(jugador.getJugadorEquipoId());
-					rankings.add(j);
-				}
+				rankings.add(e);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}	
 		}
 		
-		Collections.sort(rankings, new Comparator<Jugador>() {
-			public int compare(Jugador o1, Jugador o2) {
+		Collections.sort(rankings, new Comparator<Equipo>() {
+			public int compare(Equipo o1, Equipo o2) {
 	            return o2.getRanking().compareTo(o1.getRanking());
 	        }
 	    });		
-		List<Jugador> firstHalf = new ArrayList<>();
-		List<Jugador> secondHalf = new ArrayList<>();
-		List<Jugador[]> partidos = new ArrayList<>();
-		int x = rankings.size()/2 + (rankings.size()%2) - 1;
-		for(int i = 0; i < x; i++){
+		List<Equipo> firstHalf = new ArrayList<>();
+		List<Equipo> secondHalf = new ArrayList<>();
+		List<Equipo[]> partidos = new ArrayList<>();
+		
+		for (Equipo equipo: rankings) {
+			log.info(""+ equipo.getRanking());
+		}
+		
+		int x = rankings.size()/2 + (rankings.size()%2);
+		for(int i = 0; i < x - 1; i++){
 		    firstHalf.add(rankings.get(i));
 		}
 		for(int i = x; i < rankings.size(); i++){
 		    secondHalf.add(rankings.get(i));
 		}
-		
+
 		while(firstHalf.size() != 0) {
-			int random1 = (int) (Math.random() * rankings.size()) + 1;
+			int random1 = (int) (Math.random() * firstHalf.size()/2) + 1;
 			
-			int random2 = (int) (Math.random() * rankings.size()) + 1;			
+			int random2 = (int) (Math.random() * secondHalf.size()/2) + 1;
+			if(firstHalf.size() == 1) {
+				random1 = 0;
+				random2 = 0;
+			}
+						
 			
-			Jugador[] jugadores = {firstHalf.get(random1), secondHalf.get(random2)};
-			partidos.add(jugadores);
+			Equipo[] encuentro = {firstHalf.get(random1), secondHalf.get(random2)};
+			partidos.add(encuentro);
 			
 			firstHalf.remove(random1);
 			secondHalf.remove(random2);
+		}
+		Ronda ronda = new Ronda();
+		ronda.setNumero(1);
+		ronda.setPremio(0);
+		ronda.setPuntosAtp(0);
+		ronda.setTorneo(torneo);
+		
+		rondaDAO.save(ronda);
+		int i=0;
+		for (Equipo[] encuentros : partidos) {
+			Partido partido = new Partido();
+			partido.setEquipoByEquipo1Id(encuentros[0]);
+			partido.setEquipoByEquipo2Id(encuentros[1]);
+			partido.setRonda(ronda);
+			partido.setEstado("N");
+			partido.setNumeroEncuentro(i);
+			
+			partidoLogic.savePartido(partido);
+			i++;
 		}
 		return partidos;
 	}

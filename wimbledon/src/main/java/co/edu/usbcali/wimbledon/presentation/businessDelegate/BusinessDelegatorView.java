@@ -987,6 +987,11 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
     public void asignarCancha(ReservaCancha reservaCancha) throws Exception{
     	canchaLogic.asignarCancha(reservaCancha);
     }
+
+	@Override
+	public List<Equipo[]> generateDrawTemplate(Torneo torneo) throws Exception {
+		return torneoLogic.generateDrawTemplate(torneo);
+	}
     
     public List<Cancha> buscarDisponibles() throws Exception{
     	return canchaLogic.buscarDisponibles();
