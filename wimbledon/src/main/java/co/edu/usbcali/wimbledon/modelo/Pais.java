@@ -48,7 +48,7 @@ public class Pais implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "pais_id", unique = true, nullable = false)
+    @Column(name = "pais_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getPaisId() {
         return this.paisId;

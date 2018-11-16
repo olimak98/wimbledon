@@ -43,7 +43,7 @@ public class Jugador implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "jugador_id", unique = true, nullable = false)
+    @Column(name = "jugador_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getJugadorId() {
         return this.jugadorId;

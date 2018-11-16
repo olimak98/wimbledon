@@ -36,7 +36,7 @@ public class JuezTorneo implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "juez_torneo_id", unique = true, nullable = false)
+    @Column(name = "juez_torneo_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getJuezTorneoId() {
         return this.juezTorneoId;

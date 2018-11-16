@@ -73,7 +73,7 @@ public class Torneo implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "torneo_id", unique = true, nullable = false)
+    @Column(name = "torneo_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getTorneoId() {
         return this.torneoId;

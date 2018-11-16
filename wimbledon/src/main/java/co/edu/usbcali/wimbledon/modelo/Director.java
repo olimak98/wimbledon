@@ -48,7 +48,7 @@ public class Director implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "director_id", unique = true, nullable = false)
+    @Column(name = "director_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getDirectorId() {
         return this.directorId;
