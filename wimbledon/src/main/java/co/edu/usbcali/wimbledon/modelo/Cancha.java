@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,7 +25,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "cancha", schema = "public")
 public class Cancha implements java.io.Serializable {
-    @NotNull
     private Integer canchaId;
     @NotNull
     @NotEmpty
@@ -66,6 +67,7 @@ public class Cancha implements java.io.Serializable {
 
     @Id
     @Column(name = "cancha_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getCanchaId() {
         return this.canchaId;
     }

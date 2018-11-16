@@ -3,6 +3,8 @@ package co.edu.usbcali.wimbledon.modelo;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "set", schema = "public")
 public class Set implements java.io.Serializable {
-    @NotNull
     private Integer setId;
     @NotNull
     private Equipo equipoByEquipo1Id;
@@ -45,6 +46,7 @@ public class Set implements java.io.Serializable {
 
     @Id
     @Column(name = "set_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getSetId() {
         return this.setId;
     }

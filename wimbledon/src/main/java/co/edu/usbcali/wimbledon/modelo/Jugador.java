@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "jugador", schema = "public")
 public class Jugador implements java.io.Serializable {
-    @NotNull
     private Integer jugadorId;
     @NotNull
     private Persona persona;
@@ -43,6 +44,7 @@ public class Jugador implements java.io.Serializable {
 
     @Id
     @Column(name = "jugador_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getJugadorId() {
         return this.jugadorId;
     }

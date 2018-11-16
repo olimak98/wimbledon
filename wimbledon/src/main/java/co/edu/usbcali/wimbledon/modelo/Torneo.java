@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +28,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "torneo", schema = "public")
 public class Torneo implements java.io.Serializable {
-    @NotNull
     private Integer torneoId;
     @NotNull
     private Director director;
@@ -73,6 +74,7 @@ public class Torneo implements java.io.Serializable {
 
     @Id
     @Column(name = "torneo_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getTorneoId() {
         return this.torneoId;
     }

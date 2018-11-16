@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +27,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "juez", schema = "public")
 public class Juez implements java.io.Serializable {
-    @NotNull
     private Integer juezId;
     @NotNull
     private Persona persona;
@@ -50,6 +51,7 @@ public class Juez implements java.io.Serializable {
 
     @Id
     @Column(name = "juez_id", unique = true, nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getJuezId() {
         return this.juezId;
     }
