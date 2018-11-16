@@ -1,5 +1,4 @@
 package wimbledon;
-
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import co.edu.usbcali.wimbledon.modelo.control.IDirectorLogic;
 import co.edu.usbcali.wimbledon.modelo.control.ITorneoLogic;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/applicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 @Rollback(false)
 public class TorneoLogicTest {
 	
