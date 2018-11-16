@@ -54,7 +54,7 @@ public class Set implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipo_id")
+    @JoinColumn(name = "equipo1_id")
     public Equipo getEquipoByEquipo1Id() {
         return this.equipoByEquipo1Id;
     }
@@ -64,7 +64,7 @@ public class Set implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipo_id")
+    @JoinColumn(name = "equipo2_id")
     public Equipo getEquipoByEquipo2Id() {
         return this.equipoByEquipo2Id;
     }
