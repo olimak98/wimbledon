@@ -965,4 +965,14 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
     public List<TorneoDTO> listarActivos() throws Exception{
     	return torneoLogic.listarActivos();
     }
+
+	@Override
+	public EquipoDTO getEquipoDTOByPartido(Integer equipoId, Integer partido) throws Exception {
+		return equipoLogic.getEquipoDTOByPartido(equipoId, partido);
+	}
+
+	@Override
+	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Partido partido) throws Exception {
+		return partidoLogic.darPunto(equipoGanador, equipoPerdedor, partido);
+	}
 }

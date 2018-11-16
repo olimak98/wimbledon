@@ -55,12 +55,12 @@ public class PartidoLogicTest {
 			EquipoDTO equipo1DTO = equipoMapper.equipoToEquipoDTO(equipo1);
 			EquipoDTO equipo2DTO = equipoMapper.equipoToEquipoDTO(equipo2);
 			
-			Set set = setLogic.getSet(1);
+			Partido partido = partidoLogic.getPartido(1);
 			
 			equipo1DTO.setPuntos("40");
 			equipo2DTO.setPuntos("Adv");
 			
-			List<EquipoDTO> equipos = partidoLogic.darPunto(equipo1DTO, equipo2DTO, set);
+			List<EquipoDTO> equipos = partidoLogic.darPunto(equipo1DTO, equipo2DTO, partido);
 			equipo1DTO = equipos.get(0);
 			equipo2DTO = equipos.get(1);
 			

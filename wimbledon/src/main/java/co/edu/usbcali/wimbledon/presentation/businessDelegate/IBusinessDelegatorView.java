@@ -420,4 +420,8 @@ public interface IBusinessDelegatorView {
     public EquipoDTO buscar(String nombreEquipo) throws Exception;
     
     public List<TorneoDTO> listarActivos() throws Exception;
+
+	public EquipoDTO getEquipoDTOByPartido(Integer equipoId, Integer partido) throws Exception;
+
+	public List<EquipoDTO> darPunto(EquipoDTO equipo, EquipoDTO equipoDTO, Partido partido) throws Exception;
 }

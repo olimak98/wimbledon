@@ -462,45 +462,41 @@ public class PartidoLogic implements IPartidoLogic {
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Set setActivo)
+	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Partido partido)
 			throws Exception {
 		List<EquipoDTO> equipos = new ArrayList<EquipoDTO>();
 		try {
 			if(equipoGanador.getPuntos().equals("0")){
 				equipoGanador.setPuntos("15");
-				equipos.add(equipoGanador);
-				equipos.add(equipoPerdedor);
 			}else if(equipoGanador.getPuntos().equals("15")){
 				equipoGanador.setPuntos("30");
-				equipos.add(equipoGanador);
-				equipos.add(equipoPerdedor);
 			}else if(equipoGanador.getPuntos().equals("30")){
 				equipoGanador.setPuntos("40");
-				equipos.add(equipoGanador);
-				equipos.add(equipoPerdedor);
 			}else if(equipoGanador.getPuntos().equals("40") && 
 					(!equipoPerdedor.getPuntos().equals("40") && !equipoPerdedor.getPuntos().equals("Adv"))){
+				Set setActivo = setLogic.buscarSetActivo(partido);
 				setLogic.darJuego(setActivo, equipoGanador);
 				equipoGanador.setPuntos("0");
 				equipoPerdedor.setPuntos("0");
-				equipos.add(equipoGanador);
-				equipos.add(equipoPerdedor);
 			}else if(equipoGanador.getPuntos().equals("40") && 
 					equipoPerdedor.getPuntos().equals("40")){
 				equipoGanador.setPuntos("Adv");
-				equipos.add(equipoGanador);
-				equipos.add(equipoPerdedor);
 			}else if(equipoGanador.getPuntos().equals("40") && 
 					equipoPerdedor.getPuntos().equals("Adv")){
 				equipoPerdedor.setPuntos("40");
-				equipos.add(equipoGanador);
-				equipos.add(equipoPerdedor);
 			}else if(equipoGanador.getPuntos().equals("Adv")){
+				Set setActivo = setLogic.buscarSetActivo(partido);
 				setLogic.darJuego(setActivo, equipoGanador);
 				equipoGanador.setPuntos("0");
 				equipoPerdedor.setPuntos("0");
+			}
+			
+			if(partido.getEquipoByEquipo1Id().getEquipoId().equals(equipoGanador.getEquipoId())){
 				equipos.add(equipoGanador);
 				equipos.add(equipoPerdedor);
+			}else{
+				equipos.add(equipoPerdedor);
+				equipos.add(equipoGanador);
 			}
 			
 			return equipos;

@@ -2,6 +2,7 @@ package co.edu.usbcali.wimbledon.modelo.control;
 
 import java.util.List;
 
+import co.edu.usbcali.wimbledon.modelo.Partido;
 import co.edu.usbcali.wimbledon.modelo.Set;
 import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 import co.edu.usbcali.wimbledon.modelo.dto.SetDTO;
@@ -52,4 +53,8 @@ public interface ISetLogic {
     public void validateSet(Set set) throws Exception;
 
 	public void darJuego(Set setActivo, EquipoDTO equipoGanador) throws Exception;
+
+	public List<Set> getSetsByPartido(Integer partido) throws Exception;
+
+	public Set buscarSetActivo(Partido partido) throws Exception;
 }

@@ -79,6 +79,8 @@ public class EquipoLogic implements IEquipoLogic {
     */
     @Autowired
     private ISetDAO setDAO;
+    @Autowired
+    private ISetLogic setLogic;
 
     public void validateEquipo(Equipo equipo) throws Exception {
         try {
@@ -487,4 +489,40 @@ public class EquipoLogic implements IEquipoLogic {
     	}
     	return null;
     }
+
+	@Override
+	public EquipoDTO getEquipoDTOByPartido(Integer equipoId, Integer partido) throws Exception{
+		Equipo equipo = getEquipo(equipoId);
+		EquipoDTO equipoDTO = equipoMapper.equipoToEquipoDTO(equipo);
+		
+		List<Set> setsJugados = setLogic.getSetsByPartido(partido);
+		
+		if(setsJugados == null || setsJugados.isEmpty()){
+			return equipoDTO;
+		}
+		
+		int i = 0;
+		for (Set set : setsJugados) {
+			if(set.getEquipoByEquipo1Id().equals(equipoId)){
+				if(i == 0){
+					equipoDTO.setSet1(set.getPuntosEquipo1());
+				}else if(i == 1){
+					equipoDTO.setSet2(set.getPuntosEquipo1());
+				}else if(i == 2){
+					equipoDTO.setSet3(set.getPuntosEquipo1());
+				}
+			}else if(set.getEquipoByEquipo2Id().equals(equipoId)){
+				if(i == 0){
+					equipoDTO.setSet1(set.getPuntosEquipo2());
+				}else if(i == 1){
+					equipoDTO.setSet2(set.getPuntosEquipo2());
+				}else if(i == 2){
+					equipoDTO.setSet3(set.getPuntosEquipo2());
+				}
+			}
+			i++;
+		}
+		
+		return equipoDTO;
+	}
 }

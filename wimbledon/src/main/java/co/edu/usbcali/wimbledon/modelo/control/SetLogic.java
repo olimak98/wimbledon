@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.usbcali.wimbledon.dataaccess.dao.ISetDAO;
 import co.edu.usbcali.wimbledon.dto.mapper.ISetMapper;
 import co.edu.usbcali.wimbledon.exceptions.ZMessManager;
+import co.edu.usbcali.wimbledon.modelo.Partido;
 import co.edu.usbcali.wimbledon.modelo.Set;
 import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 import co.edu.usbcali.wimbledon.modelo.dto.SetDTO;
@@ -50,14 +51,7 @@ public class SetLogic implements ISetLogic {
     *
     */
     @Autowired
-    IEquipoLogic logicEquipo1;
-
-    /**
-    * Logic injected by Spring that manages Equipo entities
-    *
-    */
-    @Autowired
-    IEquipoLogic logicEquipo2;
+    IEquipoLogic logicEquipo;
 
     /**
     * Logic injected by Spring that manages Partido entities
@@ -402,6 +396,64 @@ public class SetLogic implements ISetLogic {
     }
 
 	@Override
-	public void darJuego(Set set, EquipoDTO equipo) {
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void darJuego(Set set, EquipoDTO equipoDTO) throws Exception{
+		try {
+			if(set.getEquipoByEquipo1Id().equals(equipoDTO.getEquipoId())){
+				if(set.getPuntosEquipo1()<5){
+					set.setPuntosEquipo1(set.getPuntosEquipo1()+1);
+				}else if(set.getPuntosEquipo1() == 5 && set.getPuntosEquipo2() < 5){
+					//GANA EL SET
+					set.setPuntosEquipo1(set.getPuntosEquipo1()+1);
+				}else if(set.getPuntosEquipo1() == 5){
+					set.setPuntosEquipo1(set.getPuntosEquipo1()+1);
+				}else if(set.getPuntosEquipo1() == 6){
+					//GANA EL SET
+					set.setPuntosEquipo1(set.getPuntosEquipo1()+1);
+				}
+			}else if(set.getEquipoByEquipo2Id().equals(equipoDTO.getEquipoId())){
+				if(set.getPuntosEquipo2()<5){
+					set.setPuntosEquipo2(set.getPuntosEquipo2()+1);
+				}else if(set.getPuntosEquipo2() == 5 && set.getPuntosEquipo1() < 5){
+					//GANA EL SET
+					set.setPuntosEquipo2(set.getPuntosEquipo2()+1);
+				}else if(set.getPuntosEquipo2() == 5){
+					set.setPuntosEquipo2(set.getPuntosEquipo2()+1);
+				}else if(set.getPuntosEquipo2() == 6){
+					//GANA EL SET
+					set.setPuntosEquipo2(set.getPuntosEquipo2()+1);
+				}
+			}
+			updateSet(set);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Set> getSetsByPartido(Integer partido) throws Exception{
+		try {
+			Object[] variables = {"partido.partidoId", false, partido, "="};
+			List<Set> sets = findByCriteria(variables, null, null);
+			
+			return sets;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public Set buscarSetActivo(Partido partido) throws Exception {
+		try {
+			Object[] variables = {"partido.partidoId", false, partido, "="};
+			List<Set> sets = findByCriteria(variables, null, null);
+			if(sets == null || sets.isEmpty()){
+				return null;
+			}
+			return sets.get(sets.size()-1);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }
