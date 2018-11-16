@@ -23,9 +23,9 @@
             <property name="hibernate.connection.driver_class"
                 value="org.postgresql.Driver" />
              <property name="hibernate.connection.url"
-                    value="jdbc:postgresql://localhost:5432/diseñoBd" />
+                    value="jdbc:postgresql://localhost:5432/wimbledon" />
              <property name="hibernate.connection.username" value="postgres" />
-             <property name="hibernate.connection.password" value="root" />
+             <property name="hibernate.connection.password" value="alejo12345" />
         </properties>
      
     </persistence-unit>
