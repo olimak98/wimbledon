@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" autoUpdate="true" />
+			<p:panel id="pnlTabla" header="ASIGNAR CANCHA A PARTIDO">
+				<p:scrollPanel mode="native">
+					<p:dataTable id="dtPartido" widgetVar="dtPartido" var="item"
+						rows="10" paginator="true" lazy="true"
+						value="#{asignarCanchaPartidoController.partidos}"
+						emptyMessage="No hay registros para mostrar"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="header">
+							<p:outputLabel value="Lista de partidos programados" />
+						</f:facet>
+
+						<p:column headerText="ID" style="width: 200px;">
+							<h:outputText value="#{item.partidoId}" />
+						</p:column>
+						<p:column headerText="Fecha comienzo" style="width: 100px;">
+							<h:outputText value="#{item.fecha}" />
+						</p:column>
+						<p:column headerText="Nombre torneo" style="width: 100px;">
+							<h:outputText value="#{item.ronda.torneo.nombre}" />
+						</p:column>
+						
+						<p:column headerText="Asignar Cancha" style="width: 100px;">
+							<p:commandButton icon="icon.iconSearch" value="-"
+								action="#{asignarCanchaPartidoController.action_buscarCanchas(item)}" update="form:pnlTabla1"/>
+						</p:column>
+					</p:dataTable>
+				</p:scrollPanel>
+			</p:panel>
+
+			<p:panel id="pnlTabla1" header="CANCHAS DISPONIBLES">
+				<p:scrollPanel mode="native">
+					<p:dataTable id="dtCancha" widgetVar="dtCancha" var="item"
+						rows="10" paginator="true" lazy="true"
+						value="#{asignarCanchaPartidoController.canchas}"
+						emptyMessage="No hay registros para mostrar"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="header">
+							<p:outputLabel value="Lista de canchas disponibles" />
+						</f:facet>
+
+						<p:column headerText="ID" style="width: 200px;">
+							<h:outputText value="#{item.canchaId}" />
+						</p:column>
+
+						<p:column headerText="Tipo Cancha" style="width: 100px;">
+							<h:outputText value="#{item.tipo}" />
+						</p:column>
+						<p:column headerText="CIUDAD" style="width: 100px;">
+							<h:outputText value="#{item.ubicacion}" />
+						</p:column>
+						<p:column headerText="Asignar Partido" style="width: 100px;">
+							<p:commandButton icon="icon.iconSearch" value="-"
+								action="#{asignarCanchaPartidoController.action_asignarCancha(item)}" />
+						</p:column>
+					</p:dataTable>
+				</p:scrollPanel>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+

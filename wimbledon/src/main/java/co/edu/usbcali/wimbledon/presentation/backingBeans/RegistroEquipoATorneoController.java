@@ -10,9 +10,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import co.edu.usbcali.wimbledon.modelo.Equipo;
+import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
 import co.edu.usbcali.wimbledon.modelo.Torneo;
 import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 import co.edu.usbcali.wimbledon.presentation.businessDelegate.IBusinessDelegatorView;
+import co.edu.usbcali.wimbledon.utilities.FacesUtils;
 
 @ManagedBean
 @ViewScoped
@@ -37,7 +39,15 @@ public class RegistroEquipoATorneoController implements Serializable{
 	}
 	
 	public void action_inscribirEquipo(Torneo torneo) {
-		
+		EquipoTorneo equipoTorneo = new EquipoTorneo();
+		equipoTorneo.setEquipo(equipo);
+		equipoTorneo.setTorneo(torneo);
+	
+		try {
+			businessDelegatorView.inscribirEquipo(equipoTorneo);
+			FacesUtils.addInfoMessage("El equipo " + equipo.getNombre() + " fue inscrito exitosamente");
+		} catch (Exception e) {
+		}
 	}
 	
     public boolean action_validarRegistro(){

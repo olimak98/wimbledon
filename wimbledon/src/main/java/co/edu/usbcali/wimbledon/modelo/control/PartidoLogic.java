@@ -516,6 +516,7 @@ public class PartidoLogic implements IPartidoLogic {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Partido> listarPendientes() throws Exception {
 		return partidoDAO.listarPendientes();
 	}

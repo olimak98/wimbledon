@@ -35,8 +35,6 @@ public class Torneo implements java.io.Serializable {
     private Integer cupos;
     @NotNull
     private Integer cuposDisponibles;
-    @NotNull
-    @NotEmpty
     @Size(max = 255)
     private String draw;
     @NotNull
@@ -111,7 +109,7 @@ public class Torneo implements java.io.Serializable {
         this.cuposDisponibles = cuposDisponibles;
     }
 
-    @Column(name = "draw", nullable = false)
+    @Column(name = "draw")
     public String getDraw() {
         return this.draw;
     }

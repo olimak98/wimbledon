@@ -987,4 +987,8 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
     public void asignarCancha(ReservaCancha reservaCancha) throws Exception{
     	canchaLogic.asignarCancha(reservaCancha);
     }
-}
+    
+    public List<Cancha> buscarDisponibles() throws Exception{
+    	return canchaLogic.buscarDisponibles();
+    }
+} 

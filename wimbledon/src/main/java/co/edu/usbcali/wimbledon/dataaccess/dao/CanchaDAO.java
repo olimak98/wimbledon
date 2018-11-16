@@ -1,5 +1,8 @@
 package co.edu.usbcali.wimbledon.dataaccess.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.usbcali.wimbledon.dataaccess.api.JpaDaoImpl;
 import co.edu.usbcali.wimbledon.modelo.Cancha;
+import co.edu.usbcali.wimbledon.modelo.Torneo;
 
 
 /**
@@ -32,5 +36,11 @@ public class CanchaDAO extends JpaDaoImpl<Cancha, Integer> implements ICanchaDAO
 
     public static ICanchaDAO getFromApplicationContext(ApplicationContext ctx) {
         return (ICanchaDAO) ctx.getBean("CanchaDAO");
+    }
+    
+    public List<Cancha> buscarDisponibles(){
+    	String jpql= "Select can from Cancha can where can.estado = 'A'";
+		List<Cancha> cancha = entityManager.createQuery(jpql).getResultList();
+		return cancha;
     }
 }

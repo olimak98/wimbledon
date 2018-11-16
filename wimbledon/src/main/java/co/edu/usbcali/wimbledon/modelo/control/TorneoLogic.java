@@ -94,6 +94,9 @@ public class TorneoLogic implements ITorneoLogic {
     */
     @Autowired
     IDirectorLogic logicDirector1;
+    
+    @Autowired
+    IEquipoTorneoLogic equipoTorneoLogic;
 
     public void validateTorneo(Torneo torneo) throws Exception {
         try {
@@ -566,12 +569,18 @@ public class TorneoLogic implements ITorneoLogic {
     
     @Override
     @Transactional(readOnly = true)
-    public List<TorneoDTO> listarActivos() throws Exception{
+    public List<Torneo> listarActivos() throws Exception{
     	try {
     		return torneoDAO.listarActivos();
     	}catch(Exception e) {
     		throw e;
     	}
-    	
     }
+    
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void inscribirEquipo(EquipoTorneo equipo) throws Exception{
+        equipoTorneoLogic.saveEquipoTorneo(equipo);
+    }
+
 }

@@ -36,14 +36,17 @@
 						</f:facet>
 
 						<p:column headerText="ID" style="width: 200px;">
-							<h:outputText value="{{item.torneoId}}" />
+							<h:outputText value="#{item.torneoId}" />
 						</p:column>
 
 						<p:column headerText="Nombre torneo" style="width: 100px;">
-							<h:outputText value="" />
+							<h:outputText value="#{item.nombre}" />
+						</p:column>
+						<p:column headerText="CUPOS" style="width: 100px;">
+							<h:outputText value="#{item.cuposDisponibles}" />
 						</p:column>
 						<p:column headerText="Fecha comienzo" style="width: 100px;">
-							<h:outputText value="" />
+							<h:outputText value="#{item.fechaInicio}" />
 						</p:column>
 						<p:column headerText="Inscribir" style="width: 100px;">
 							<p:commandButton icon="icon.iconSearch" value="-"

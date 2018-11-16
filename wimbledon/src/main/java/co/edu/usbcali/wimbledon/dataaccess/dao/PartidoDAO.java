@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -42,6 +43,9 @@ public class PartidoDAO extends JpaDaoImpl<Partido, Integer>
 	public List<Partido> listarPendientes() throws Exception {
 		String jpql= "Select par from Partido par where par.estado='P'";
 		List<Partido> partidos = entityManager.createQuery(jpql).getResultList();
+		for (Partido partido : partidos) {
+			Hibernate.initialize(partido.getRonda().getTorneo());
+		}
 		return partidos;
 	}
 }

@@ -53,4 +53,6 @@ public interface ICanchaLogic {
     public void validateCancha(Cancha cancha) throws Exception;
     
     public void asignarCancha(ReservaCancha reservaCancha)throws Exception;
+    
+    public List<Cancha> buscarDisponibles() throws Exception;
 }

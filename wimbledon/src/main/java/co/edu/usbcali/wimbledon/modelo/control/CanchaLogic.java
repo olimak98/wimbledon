@@ -419,7 +419,14 @@ public class CanchaLogic implements ICanchaLogic {
         return list;
     }
     
+    
+   @Transactional(readOnly=false, propagation=Propagation.REQUIRED)
     public void asignarCancha(ReservaCancha reservaCancha)throws Exception{
     	reservaCanchaLogic.saveReservaCancha(reservaCancha);
+    }
+    
+   @Transactional(readOnly=true)
+    public List<Cancha> buscarDisponibles() throws Exception{
+    	return canchaDAO.buscarDisponibles();
     }
 }
