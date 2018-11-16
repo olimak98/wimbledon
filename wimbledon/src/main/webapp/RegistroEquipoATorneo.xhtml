@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" autoUpdate="true" />
+
+			<p:panel id="pnlCrear" header="Registro de un equipo a un torneo">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank"
+					style="border:0px none; background-color:transparent; float: none;">
+					<p:panelGrid columns="2" styleClass="ui-g-12">
+						<p:outputLabel value="Ingrese nombre de equipo" for="nombre" />
+						<p:inputText id="nombre" placeholder="Roger Federer"
+							value="#{registroEquipoATorneoController.nombre}" />
+					</p:panelGrid>
+					<p:commandButton id="btnBuscar" value="BUSCAR" update=":form"
+						action="#{registroEquipoATorneoController.action_buscarEquipo()}"
+						styleClass="ui-g-12" />
+				</p:panelGrid>
+			</p:panel>
+
+			<p:panel id="pnlTabla" header="Lista torneos disponibles">
+				<p:scrollPanel mode="native">
+					<p:dataTable id="dtTorneo" widgetVar="dtTorneo" var="item"
+						rows="10" paginator="true" lazy="true"
+						value="#{registroEquipoATorneoController.torneos}"
+						emptyMessage="No hay registros para mostrar"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+						<f:facet name="header">
+							<p:outputLabel value="Torneos" />
+						</f:facet>
+
+						<p:column headerText="ID" style="width: 200px;">
+							<h:outputText value="{{item.torneoId}}" />
+						</p:column>
+
+						<p:column headerText="Nombre torneo" style="width: 100px;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Fecha comienzo" style="width: 100px;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Inscribir" style="width: 100px;">
+							<p:commandButton icon="icon.iconSearch" value="-"
+								action="#{registroEquipoATorneoController.action_inscribirEquipo(item)}" />
+						</p:column>
+					</p:dataTable>
+				</p:scrollPanel>
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
