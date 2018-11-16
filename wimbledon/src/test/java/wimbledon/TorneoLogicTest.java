@@ -48,7 +48,7 @@ public class TorneoLogicTest {
 		persona.setTipoIdentificacion("Cedula");
 		
 		Director director = new Director();
-		director.setEstado("Activo");
+		director.setEstado("A");
 		director.setPersona(persona);
 		
 		try {
