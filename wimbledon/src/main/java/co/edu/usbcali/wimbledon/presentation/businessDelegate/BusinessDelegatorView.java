@@ -963,6 +963,6 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
     }
     
     public List<TorneoDTO> listarActivos() throws Exception{
-    	return null;
+    	return torneoLogic.listarActivos();
     }
 }

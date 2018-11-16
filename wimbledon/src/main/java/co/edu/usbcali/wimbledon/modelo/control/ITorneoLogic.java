@@ -50,4 +50,6 @@ public interface ITorneoLogic {
     public List<TorneoDTO> getDataTorneo() throws Exception;
 
     public void validateTorneo(Torneo torneo) throws Exception;
+    
+    public List<TorneoDTO> listarActivos() throws Exception;
 }

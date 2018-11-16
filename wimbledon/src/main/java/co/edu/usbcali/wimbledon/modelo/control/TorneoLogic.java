@@ -508,4 +508,13 @@ public class TorneoLogic implements ITorneoLogic {
 
         return list;
     }
+    
+    public List<TorneoDTO> listarActivos() throws Exception{
+    	try {
+    		return torneoDAO.listarActivos();
+    	}catch(Exception e) {
+    		throw e;
+    	}
+    	
+    }
 }

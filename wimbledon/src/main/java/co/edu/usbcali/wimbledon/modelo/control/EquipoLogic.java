@@ -483,9 +483,8 @@ public class EquipoLogic implements IEquipoLogic {
     }
     
     public EquipoDTO buscar(String nombreEquipo) throws Exception{
-    	EquipoDTO equipo = new EquipoDTO();
     	try {
-    		
+    		return equipoDAO.buscar(nombreEquipo);
     	}catch(Exception e) {
     		
     	}
