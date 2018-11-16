@@ -1,5 +1,7 @@
 package co.edu.usbcali.wimbledon.dataaccess.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.usbcali.wimbledon.dataaccess.api.JpaDaoImpl;
 import co.edu.usbcali.wimbledon.modelo.Torneo;
+import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
+import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
 
 
 /**
@@ -32,5 +36,12 @@ public class TorneoDAO extends JpaDaoImpl<Torneo, Integer> implements ITorneoDAO
 
     public static ITorneoDAO getFromApplicationContext(ApplicationContext ctx) {
         return (ITorneoDAO) ctx.getBean("TorneoDAO");
+    }
+    
+    @Override
+	public List<TorneoDTO> listarActivos() throws Exception {
+    	String jpql= "Select tor from Torneo tor where tor.estado=activo";
+		List<TorneoDTO> torneo = entityManager.createQuery(jpql).getResultList();
+		return torneo;
     }
 }

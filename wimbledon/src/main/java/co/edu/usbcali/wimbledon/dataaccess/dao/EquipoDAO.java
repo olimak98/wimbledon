@@ -39,7 +39,7 @@ public class EquipoDAO extends JpaDaoImpl<Equipo, Integer> implements IEquipoDAO
     @Override
 	public EquipoDTO buscar(String nombreEquipo) throws Exception {
     	String jpql= "Select equi from Equipo equi where equis.nombre=:nombre";
-		EquipoDTO equipo =(EquipoDTO) entityManager.createQuery(jpql).setParameter("nombre", nombreEquipo).getResultList();
+		EquipoDTO equipo = (EquipoDTO) entityManager.createQuery(jpql).setParameter("nombre", nombreEquipo).getSingleResult();
 		return equipo;
     }
 }
