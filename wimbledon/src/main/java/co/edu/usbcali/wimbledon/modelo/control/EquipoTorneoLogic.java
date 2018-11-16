@@ -111,10 +111,6 @@ public class EquipoTorneoLogic implements IEquipoTorneoLogic {
 
             validateEquipoTorneo(entity);
 
-            if (getEquipoTorneo(entity.getEquipoTorneoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             equipoTorneoDAO.save(entity);
             log.debug("save EquipoTorneo successful");
         } catch (Exception e) {

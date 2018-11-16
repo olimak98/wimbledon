@@ -112,10 +112,6 @@ public class RondaLogic implements IRondaLogic {
 
             validateRonda(entity);
 
-            if (getRonda(entity.getRondaId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             rondaDAO.save(entity);
             log.debug("save Ronda successful");
         } catch (Exception e) {

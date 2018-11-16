@@ -112,10 +112,6 @@ public class JugadorLogic implements IJugadorLogic {
 
             validateJugador(entity);
 
-            if (getJugador(entity.getJugadorId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             jugadorDAO.save(entity);
             log.debug("save Jugador successful");
         } catch (Exception e) {

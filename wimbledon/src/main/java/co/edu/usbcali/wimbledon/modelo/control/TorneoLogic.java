@@ -195,10 +195,6 @@ public class TorneoLogic implements ITorneoLogic {
 
             validateTorneo(entity);
 
-            if (getTorneo(entity.getTorneoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             torneoDAO.save(entity);
             log.debug("save Torneo successful");
         } catch (Exception e) {
