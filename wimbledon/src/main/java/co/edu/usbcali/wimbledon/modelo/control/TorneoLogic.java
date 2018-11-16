@@ -127,13 +127,13 @@ public class TorneoLogic implements ITorneoLogic {
     public List<Equipo[]> generateDrawTemplate(Torneo torneo) throws Exception{
     	torneo = getTorneo(torneo.getTorneoId());
     	
-    	if(torneo.getEstado()!= "C") {
+    	if(!torneo.getEstado().equals("C")) {
     		throw new Exception("El torneo no se encuentra cerrado.");
     	}
     	if(torneo.getCuposDisponibles() != 0) {
     		throw new Exception("El torneo cuenta con cupos disponibles.");
     	}
-    	if(torneo.getDraw() != null || torneo.getDraw().equals("Vacío")) {
+    	if(torneo.getDraw() != null) {
     		throw new Exception("El torneo ya cuenta con un draw template");
     	}
     	Set<EquipoTorneo> equipos = torneo.getEquipoTorneos();
@@ -199,7 +199,7 @@ public class TorneoLogic implements ITorneoLogic {
 			partido.setEquipoByEquipo1Id(encuentros[0]);
 			partido.setEquipoByEquipo2Id(encuentros[1]);
 			partido.setRonda(ronda);
-			partido.setEstado("N");
+			partido.setEstado("P");
 			partido.setNumeroEncuentro(i);
 			
 			partidoLogic.savePartido(partido);

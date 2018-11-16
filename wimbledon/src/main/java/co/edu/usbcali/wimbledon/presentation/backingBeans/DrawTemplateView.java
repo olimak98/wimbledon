@@ -27,7 +27,7 @@ public class DrawTemplateView{
 	@PostConstruct
 	private void init() {
 		try {
-			torneo = businessDelegatorView.getTorneo(3);
+			torneo = businessDelegatorView.getTorneo(1);
 		} catch (Exception e) {
 		}
 	}
