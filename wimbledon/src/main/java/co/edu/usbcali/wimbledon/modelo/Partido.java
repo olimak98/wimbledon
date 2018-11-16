@@ -2,7 +2,6 @@ package co.edu.usbcali.wimbledon.modelo;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,8 +48,6 @@ public class Partido implements java.io.Serializable {
     private Date fecha;
     private Integer numeroEncuentro;
     private String puntuacion;
-    private Set<ReservaCancha> reservaCanchas = new HashSet<ReservaCancha>(0);
-    private Set<co.edu.usbcali.wimbledon.modelo.Set> sets = new HashSet<co.edu.usbcali.wimbledon.modelo.Set>(0);
 
     public Partido() {
     }
@@ -58,8 +55,7 @@ public class Partido implements java.io.Serializable {
     public Partido(Integer partidoId, Cancha cancha, Integer duracion,
         Equipo equipoByEquipo1Id, Equipo equipoByEquipo2Id,
         Equipo equipoByEquipoGanadorId, String estado, Date fecha, Juez juez,
-        Integer numeroEncuentro, String puntuacion,
-        Set<ReservaCancha> reservaCanchas, Ronda ronda, Set<co.edu.usbcali.wimbledon.modelo.Set> sets) {
+        Integer numeroEncuentro, String puntuacion, Ronda ronda) {
         this.partidoId = partidoId;
         this.cancha = cancha;
         this.equipoByEquipo1Id = equipoByEquipo1Id;
@@ -72,12 +68,10 @@ public class Partido implements java.io.Serializable {
         this.fecha = fecha;
         this.numeroEncuentro = numeroEncuentro;
         this.puntuacion = puntuacion;
-        this.reservaCanchas = reservaCanchas;
-        this.sets = sets;
     }
 
     @Id
-    @Column(name = "partido_id", unique = true, nullable = false)
+    @Column(name = "partido_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getPartidoId() {
         return this.partidoId;
@@ -190,23 +184,5 @@ public class Partido implements java.io.Serializable {
 
     public void setPuntuacion(String puntuacion) {
         this.puntuacion = puntuacion;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partido")
-    public Set<ReservaCancha> getReservaCanchas() {
-        return this.reservaCanchas;
-    }
-
-    public void setReservaCanchas(Set<ReservaCancha> reservaCanchas) {
-        this.reservaCanchas = reservaCanchas;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partido")
-    public Set<co.edu.usbcali.wimbledon.modelo.Set> getSets() {
-        return this.sets;
-    }
-
-    public void setSets(Set<co.edu.usbcali.wimbledon.modelo.Set> sets) {
-        this.sets = sets;
     }
 }

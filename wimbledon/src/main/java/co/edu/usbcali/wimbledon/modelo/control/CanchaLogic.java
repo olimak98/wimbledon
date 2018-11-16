@@ -114,10 +114,6 @@ public class CanchaLogic implements ICanchaLogic {
 
             validateCancha(entity);
 
-            if (getCancha(entity.getCanchaId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             canchaDAO.save(entity);
             log.debug("save Cancha successful");
         } catch (Exception e) {

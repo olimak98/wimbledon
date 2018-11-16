@@ -63,7 +63,7 @@ public class Equipo implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "equipo_id", unique = true, nullable = false)
+    @Column(name = "equipo_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getEquipoId() {
         return this.equipoId;

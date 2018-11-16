@@ -111,10 +111,6 @@ public class JuezTorneoLogic implements IJuezTorneoLogic {
 
             validateJuezTorneo(entity);
 
-            if (getJuezTorneo(entity.getJuezTorneoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             juezTorneoDAO.save(entity);
             log.debug("save JuezTorneo successful");
         } catch (Exception e) {

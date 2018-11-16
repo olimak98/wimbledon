@@ -105,10 +105,6 @@ public class PaisLogic implements IPaisLogic {
 
             validatePais(entity);
 
-            if (getPais(entity.getPaisId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             paisDAO.save(entity);
             log.debug("save Pais successful");
         } catch (Exception e) {

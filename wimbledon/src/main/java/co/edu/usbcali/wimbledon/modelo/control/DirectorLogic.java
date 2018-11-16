@@ -112,10 +112,6 @@ public class DirectorLogic implements IDirectorLogic {
 
             validateDirector(entity);
 
-            if (getDirector(entity.getDirectorId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             directorDAO.save(entity);
             log.debug("save Director successful");
         } catch (Exception e) {

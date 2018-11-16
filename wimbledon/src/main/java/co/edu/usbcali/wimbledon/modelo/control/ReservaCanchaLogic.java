@@ -113,10 +113,6 @@ public class ReservaCanchaLogic implements IReservaCanchaLogic {
 
             validateReservaCancha(entity);
 
-            if (getReservaCancha(entity.getReservaCanchaId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             reservaCanchaDAO.save(entity);
             log.debug("save ReservaCancha successful");
         } catch (Exception e) {

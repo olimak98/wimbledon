@@ -19,6 +19,7 @@ import co.edu.usbcali.wimbledon.dataaccess.dao.ISetDAO;
 import co.edu.usbcali.wimbledon.dto.mapper.ISetMapper;
 import co.edu.usbcali.wimbledon.exceptions.ZMessManager;
 import co.edu.usbcali.wimbledon.modelo.Set;
+import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 import co.edu.usbcali.wimbledon.modelo.dto.SetDTO;
 import co.edu.usbcali.wimbledon.utilities.Utilities;
 
@@ -115,10 +116,6 @@ public class SetLogic implements ISetLogic {
             }
 
             validateSet(entity);
-
-            if (getSet(entity.getSetId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
 
             setDAO.save(entity);
             log.debug("save Set successful");
@@ -403,4 +400,8 @@ public class SetLogic implements ISetLogic {
 
         return list;
     }
+
+	@Override
+	public void darJuego(Set set, EquipoDTO equipo) {
+	}
 }

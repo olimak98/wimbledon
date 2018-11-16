@@ -121,10 +121,6 @@ public class JuezLogic implements IJuezLogic {
 
             validateJuez(entity);
 
-            if (getJuez(entity.getJuezId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             juezDAO.save(entity);
             log.debug("save Juez successful");
         } catch (Exception e) {
