@@ -112,8 +112,6 @@ public class JugadorLogic implements IJugadorLogic {
 
             validateJugador(entity);
 
-            
-
             jugadorDAO.save(entity);
             log.debug("save Jugador successful");
         } catch (Exception e) {

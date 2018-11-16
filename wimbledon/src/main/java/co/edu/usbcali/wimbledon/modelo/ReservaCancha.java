@@ -41,7 +41,7 @@ public class ReservaCancha implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "reserva_cancha_id", unique = true, nullable = false)
+    @Column(name = "reserva_cancha_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getReservaCanchaId() {
         return this.reservaCanchaId;

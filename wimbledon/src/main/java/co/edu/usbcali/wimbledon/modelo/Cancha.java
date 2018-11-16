@@ -66,7 +66,7 @@ public class Cancha implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "cancha_id", unique = true, nullable = false)
+    @Column(name = "cancha_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getCanchaId() {
         return this.canchaId;

@@ -23,6 +23,7 @@ import co.edu.usbcali.wimbledon.exceptions.ZMessManager;
 import co.edu.usbcali.wimbledon.modelo.Partido;
 import co.edu.usbcali.wimbledon.modelo.ReservaCancha;
 import co.edu.usbcali.wimbledon.modelo.Set;
+import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 import co.edu.usbcali.wimbledon.modelo.dto.PartidoDTO;
 import co.edu.usbcali.wimbledon.utilities.Utilities;
 
@@ -103,6 +104,8 @@ public class PartidoLogic implements IPartidoLogic {
     */
     @Autowired
     IRondaLogic logicRonda6;
+    @Autowired
+    ISetLogic setLogic;
 
     public void validatePartido(Partido partido) throws Exception {
         try {
@@ -154,10 +157,6 @@ public class PartidoLogic implements IPartidoLogic {
             }
 
             validatePartido(entity);
-
-            if (getPartido(entity.getPartidoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
 
             partidoDAO.save(entity);
             log.debug("save Partido successful");
@@ -460,4 +459,64 @@ public class PartidoLogic implements IPartidoLogic {
 
         return list;
     }
+
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Partido partido)
+			throws Exception {
+		List<EquipoDTO> equipos = new ArrayList<EquipoDTO>();
+		try {
+			if(equipoGanador.getPuntos().equals("0")){
+				equipoGanador.setPuntos("15");
+			}else if(equipoGanador.getPuntos().equals("15")){
+				equipoGanador.setPuntos("30");
+			}else if(equipoGanador.getPuntos().equals("30")){
+				equipoGanador.setPuntos("40");
+			}else if(equipoGanador.getPuntos().equals("40") && 
+					(!equipoPerdedor.getPuntos().equals("40") && !equipoPerdedor.getPuntos().equals("Adv"))){
+				Set setActivo = setLogic.buscarSetActivo(partido);
+				setLogic.darJuego(setActivo, equipoGanador);
+				equipoGanador.setPuntos("0");
+				equipoPerdedor.setPuntos("0");
+			}else if(equipoGanador.getPuntos().equals("40") && 
+					equipoPerdedor.getPuntos().equals("40")){
+				equipoGanador.setPuntos("Adv");
+			}else if(equipoGanador.getPuntos().equals("40") && 
+					equipoPerdedor.getPuntos().equals("Adv")){
+				equipoPerdedor.setPuntos("40");
+			}else if(equipoGanador.getPuntos().equals("Adv")){
+				Set setActivo = setLogic.buscarSetActivo(partido);
+				setLogic.darJuego(setActivo, equipoGanador);
+				equipoGanador.setPuntos("0");
+				equipoPerdedor.setPuntos("0");
+			}
+			
+			if(partido.getEquipoByEquipo1Id().getEquipoId().equals(equipoGanador.getEquipoId())){
+				equipos.add(equipoGanador);
+				equipos.add(equipoPerdedor);
+			}else{
+				equipos.add(equipoPerdedor);
+				equipos.add(equipoGanador);
+			}
+			
+			return equipos;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Partido> listarPendiente() throws Exception{
+		try {
+			return partidoDAO.listarPendientes();
+		}catch(Exception e) {
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Partido> listarPendientes() throws Exception {
+		return partidoDAO.listarPendientes();
+	}
 }

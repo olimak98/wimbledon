@@ -112,7 +112,6 @@ public class DirectorLogic implements IDirectorLogic {
 
             validateDirector(entity);
 
-
             directorDAO.save(entity);
             log.debug("save Director successful");
         } catch (Exception e) {

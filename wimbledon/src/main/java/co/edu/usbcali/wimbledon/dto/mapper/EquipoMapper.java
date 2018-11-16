@@ -33,7 +33,10 @@ public class EquipoMapper implements IEquipoMapper {
                 ? equipo.getEstado() : null);
             equipoDTO.setNombre((equipo.getNombre() != null)
                 ? equipo.getNombre() : null);
-
+            equipoDTO.setPuntos("0");
+            equipoDTO.setSet1(0);
+            equipoDTO.setSet2(0);
+            equipoDTO.setSet3(0);
             return equipoDTO;
         } catch (Exception e) {
             throw e;

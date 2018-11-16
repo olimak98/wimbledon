@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl autoUpdate="true" id="growl" showDetail="true"/>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			</p:confirmDialog>
+
+			<p:dataTable var="equipo" value="#{puntuarView.equipos}"
+				widgetVar="puntaje">
+				<f:facet name="header">
+	            Score
+	        </f:facet>
+
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column rowspan="5" headerText="Teams" />
+						<p:column colspan="3" headerText="Sets" />
+						<p:column rowspan="3" headerText="Points" />
+					</p:row>
+				</p:columnGroup>
+				<p:column>
+					<h:outputText value="#{equipo.nombre}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{equipo.set1}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{equipo.set2}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{equipo.set3}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{equipo.puntos}" />
+				</p:column>
+				<p:column>
+					<p:commandButton value="Add Point"
+						action="#{puntuarView.addPoint(equipo)}" update="@form">
+						<p:confirm header="Confirmation" message="Are you sure?" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+

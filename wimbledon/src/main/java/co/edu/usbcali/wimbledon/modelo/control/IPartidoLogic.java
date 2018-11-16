@@ -2,7 +2,10 @@ package co.edu.usbcali.wimbledon.modelo.control;
 
 import java.util.List;
 
+import co.edu.usbcali.wimbledon.modelo.Equipo;
 import co.edu.usbcali.wimbledon.modelo.Partido;
+import co.edu.usbcali.wimbledon.modelo.Set;
+import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 import co.edu.usbcali.wimbledon.modelo.dto.PartidoDTO;
 
 
@@ -50,4 +53,8 @@ public interface IPartidoLogic {
     public List<PartidoDTO> getDataPartido() throws Exception;
 
     public void validatePartido(Partido partido) throws Exception;
+
+	public List<EquipoDTO> darPunto(EquipoDTO equipoGanador, EquipoDTO equipoPerdedor, Partido partido) throws Exception;
+	
+	public List<Partido> listarPendientes() throws Exception;
 }

@@ -113,10 +113,6 @@ public class JugadorEquipoLogic implements IJugadorEquipoLogic {
 
             validateJugadorEquipo(entity);
 
-            if (getJugadorEquipo(entity.getJugadorEquipoId()) != null) {
-                throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-            }
-
             jugadorEquipoDAO.save(entity);
             log.debug("save JugadorEquipo successful");
         } catch (Exception e) {

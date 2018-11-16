@@ -45,7 +45,7 @@ public class Set implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "set_id", unique = true, nullable = false)
+    @Column(name = "set_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getSetId() {
         return this.setId;

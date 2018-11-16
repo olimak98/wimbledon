@@ -130,7 +130,6 @@ public class PersonaLogic implements IPersonaLogic {
 
             validatePersona(entity);
 
-
             personaDAO.save(entity);
             log.debug("save Persona successful");
         } catch (Exception e) {

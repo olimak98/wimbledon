@@ -46,7 +46,7 @@ public class Ronda implements java.io.Serializable {
     }
 
     @Id
-    @Column(name = "ronda_id", unique = true, nullable = false)
+    @Column(name = "ronda_id", unique = true)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Integer getRondaId() {
         return this.rondaId;

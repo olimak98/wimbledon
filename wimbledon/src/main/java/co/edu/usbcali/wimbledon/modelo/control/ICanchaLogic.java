@@ -3,6 +3,7 @@ package co.edu.usbcali.wimbledon.modelo.control;
 import java.util.List;
 
 import co.edu.usbcali.wimbledon.modelo.Cancha;
+import co.edu.usbcali.wimbledon.modelo.ReservaCancha;
 import co.edu.usbcali.wimbledon.modelo.dto.CanchaDTO;
 
 
@@ -50,4 +51,6 @@ public interface ICanchaLogic {
     public List<CanchaDTO> getDataCancha() throws Exception;
 
     public void validateCancha(Cancha cancha) throws Exception;
+    
+    public void asignarCancha(ReservaCancha reservaCancha)throws Exception;
 }

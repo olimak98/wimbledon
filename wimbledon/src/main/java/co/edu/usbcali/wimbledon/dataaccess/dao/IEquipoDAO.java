@@ -11,5 +11,5 @@ import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 */
 public interface IEquipoDAO extends Dao<Equipo, Integer> {
 	
-	public EquipoDTO buscar(String nombreEquipo) throws Exception;
+	public Equipo buscar(String nombreEquipo) throws Exception;
 }
