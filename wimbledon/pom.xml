@@ -1,5 +1,6 @@
 <!--Author Zathuracode Generator -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -195,6 +196,16 @@
 			<version>3.1.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>2.2.4</version>
+		</dependency>
 
 		<!-- Logger -->
 		<!-- LOGS log4j2 y SLF4J -->
@@ -276,7 +287,7 @@
 					<encoding>UTF-8</encoding>
 					<source>1.7</source>
 					<target>1.7</target>
-				
+
 				</configuration>
 			</plugin>
 			<plugin>
