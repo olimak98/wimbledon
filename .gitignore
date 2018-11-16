@@ -89,3 +89,5 @@ EncodeHTML/
 *.lock
 *.vpprefdata/
 *.vpp.bak_*
+
+persistence.xml
