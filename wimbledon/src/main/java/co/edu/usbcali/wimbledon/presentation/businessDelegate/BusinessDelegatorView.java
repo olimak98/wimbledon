@@ -969,4 +969,12 @@ public class BusinessDelegatorView implements IBusinessDelegatorView {
     public void inscribirEquipo(EquipoTorneo equipoTorneo) throws Exception {
     	torneoLogic.inscribirEquipo(equipoTorneo);
     }
+    
+    public List<Partido> listarPendientes() throws Exception {
+    	return partidoLogic.listarPendientes();
+    }
+    
+    public void asignarCancha(ReservaCancha reservaCancha) throws Exception{
+    	canchaLogic.asignarCancha(reservaCancha);
+    }
 }

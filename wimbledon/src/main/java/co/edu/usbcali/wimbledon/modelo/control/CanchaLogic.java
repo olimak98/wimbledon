@@ -62,6 +62,9 @@ public class CanchaLogic implements ICanchaLogic {
     */
     @Autowired
     private IReservaCanchaDAO reservaCanchaDAO;
+    
+    @Autowired
+    private IReservaCanchaLogic reservaCanchaLogic;
 
     public void validateCancha(Cancha cancha) throws Exception {
         try {
@@ -414,5 +417,9 @@ public class CanchaLogic implements ICanchaLogic {
         }
 
         return list;
+    }
+    
+    public void asignarCancha(ReservaCancha reservaCancha)throws Exception{
+    	reservaCanchaLogic.saveReservaCancha(reservaCancha);
     }
 }

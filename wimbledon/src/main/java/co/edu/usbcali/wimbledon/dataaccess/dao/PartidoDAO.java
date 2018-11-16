@@ -1,5 +1,7 @@
 package co.edu.usbcali.wimbledon.dataaccess.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import co.edu.usbcali.wimbledon.dataaccess.api.JpaDaoImpl;
+import co.edu.usbcali.wimbledon.modelo.Equipo;
 import co.edu.usbcali.wimbledon.modelo.Partido;
 
 
@@ -34,4 +37,11 @@ public class PartidoDAO extends JpaDaoImpl<Partido, Integer>
     public static IPartidoDAO getFromApplicationContext(ApplicationContext ctx) {
         return (IPartidoDAO) ctx.getBean("PartidoDAO");
     }
+
+	@Override
+	public List<Partido> listarPendientes() throws Exception {
+		String jpql= "Select par from Partido par where par.estado='P'";
+		List<Partido> partidos = entityManager.createQuery(jpql).getResultList();
+		return partidos;
+	}
 }

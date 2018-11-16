@@ -422,4 +422,8 @@ public interface IBusinessDelegatorView {
     public List<Torneo> listarActivos() throws Exception;
     
     public void inscribirEquipo(EquipoTorneo equipoTorneo) throws Exception;
+    
+    public List<Partido> listarPendientes() throws Exception;
+    
+    public void asignarCancha(ReservaCancha reservaCancha) throws Exception;
 }

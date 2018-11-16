@@ -1,5 +1,6 @@
 package wimbledon;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -13,11 +14,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.edu.usbcali.wimbledon.modelo.Cancha;
 import co.edu.usbcali.wimbledon.modelo.Equipo;
 import co.edu.usbcali.wimbledon.modelo.EquipoTorneo;
+import co.edu.usbcali.wimbledon.modelo.Partido;
+import co.edu.usbcali.wimbledon.modelo.ReservaCancha;
 import co.edu.usbcali.wimbledon.modelo.Torneo;
+import co.edu.usbcali.wimbledon.modelo.control.ICanchaLogic;
 import co.edu.usbcali.wimbledon.modelo.control.IEquipoLogic;
 import co.edu.usbcali.wimbledon.modelo.control.IEquipoTorneoLogic;
+import co.edu.usbcali.wimbledon.modelo.control.IPartidoLogic;
 import co.edu.usbcali.wimbledon.modelo.control.ITorneoLogic;
 import co.edu.usbcali.wimbledon.modelo.dto.TorneoDTO;
 
@@ -36,6 +42,12 @@ public class EquipoLogicTest {
 	
 	@Autowired
 	private IEquipoTorneoLogic equipoTorneoLogic;
+	
+	@Autowired
+	private IPartidoLogic partidoLogic;
+	
+	@Autowired
+	private ICanchaLogic canchaLogic;
 	
 	@Test
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
@@ -68,8 +80,30 @@ public class EquipoLogicTest {
 		equipoTorneo.setTorneo(torneo);
 		
 		torneoLogic.inscribirEquipo(equipoTorneo);
-		
-			
 	}
 	
+	@Test
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
+	public void dtest()throws Exception {	
+		List<Partido> partidoPen= partidoLogic.listarPendientes();
+		for (Partido partidoDTO : partidoPen) {
+			log.info("El nombre del país es: " + partidoDTO.getPuntuacion());
+			log.info("El nombre del departamento es: " + partidoDTO.getEstado());
+		}
+	}
+	
+	@Test
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
+	public void etest()throws Exception {	
+		Date fecha = new Date();
+		
+		ReservaCancha reservaCancha = new ReservaCancha();
+		Cancha cancha = canchaLogic.getCancha(1);
+		Partido partido = partidoLogic.getPartido(1);
+		reservaCancha.setCancha(cancha);		
+		reservaCancha.setPartido(partido);
+		reservaCancha.setFecha(fecha);
+		
+		canchaLogic.asignarCancha(reservaCancha);
+	}
 }
