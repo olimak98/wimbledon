@@ -1,5 +1,7 @@
 package co.edu.usbcali.wimbledon.dataaccess.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -8,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-
 import co.edu.usbcali.wimbledon.dataaccess.api.JpaDaoImpl;
 import co.edu.usbcali.wimbledon.modelo.Equipo;
+import co.edu.usbcali.wimbledon.modelo.dto.EquipoDTO;
 
 
 /**
@@ -32,5 +34,12 @@ public class EquipoDAO extends JpaDaoImpl<Equipo, Integer> implements IEquipoDAO
 
     public static IEquipoDAO getFromApplicationContext(ApplicationContext ctx) {
         return (IEquipoDAO) ctx.getBean("EquipoDAO");
+    }
+    
+    @Override
+	public EquipoDTO buscar(String nombreEquipo) throws Exception {
+    	String jpql= "Select equi from Equipo equi where equis.nombre=:nombre";
+		EquipoDTO equipo =(EquipoDTO) entityManager.createQuery(jpql).setParameter("nombre", nombreEquipo).getResultList();
+		return equipo;
     }
 }
