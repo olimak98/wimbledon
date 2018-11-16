@@ -107,7 +107,7 @@ public class Equipo implements java.io.Serializable {
         this.jugadorEquipos = jugadorEquipos;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipoByEquipo1Id")
     public Set<Partido> getPartidosForEquipo1Id() {
         return this.partidosForEquipo1Id;
     }
@@ -116,7 +116,7 @@ public class Equipo implements java.io.Serializable {
         this.partidosForEquipo1Id = partidosForEquipo1Id;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipoByEquipo2Id")
     public Set<Partido> getPartidosForEquipo2Id() {
         return this.partidosForEquipo2Id;
     }
@@ -125,7 +125,7 @@ public class Equipo implements java.io.Serializable {
         this.partidosForEquipo2Id = partidosForEquipo2Id;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipoByEquipoGanadorId")
     public Set<Partido> getPartidosForEquipoGanadorId() {
         return this.partidosForEquipoGanadorId;
     }
@@ -135,7 +135,7 @@ public class Equipo implements java.io.Serializable {
         this.partidosForEquipoGanadorId = partidosForEquipoGanadorId;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipoByEquipo1Id")
     public Set<co.edu.usbcali.wimbledon.modelo.Set> getSetsForEquipo1Id() {
         return this.setsForEquipo1Id;
     }
@@ -144,7 +144,7 @@ public class Equipo implements java.io.Serializable {
         this.setsForEquipo1Id = setsForEquipo1Id;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipoByEquipo2Id")
     public Set<co.edu.usbcali.wimbledon.modelo.Set> getSetsForEquipo2Id() {
         return this.setsForEquipo2Id;
     }
